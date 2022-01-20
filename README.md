@@ -3,7 +3,7 @@
 PostGRES back-end data at ElephantSQL
 
 
-Continuous Deployment on HEROKU https://
+Continuous Deployment on HEROKU https://sharemyfood-backend.herokuapp.com/
 
 
 Project Team:
