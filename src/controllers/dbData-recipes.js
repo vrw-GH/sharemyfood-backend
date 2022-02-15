@@ -1,9 +1,11 @@
-import slug from "slug";
 // --------  SELECT A DATABASE FROM HERE ----
-// ELEPHANTSQL                                                - working!
-import { queryDB, changeDB, deleteDB } from "../db/pg.js";
-// HEROKU                                                  - to be developed!!
-// import conn from "../db/heroku.js";
+import { queryDB, changeDB, deleteDB } from "../db/db-pg.js";
+// import { queryDB, changeDB, deleteDB } from "../db/db-mysql.js";
+
+import slug from "slug";
+
+// ------ fields list  ---------
+// ??
 
 export const getAllEL = (table) => {
   const fields =

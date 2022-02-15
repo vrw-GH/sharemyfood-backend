@@ -1,8 +1,9 @@
 // --------  SELECT A DATABASE FROM HERE ----
-// ELEPHANTSQL                                                - working!
-import { queryDB, changeDB, deleteDB } from "../db/pg.js";
-// HEROKU                                                  - to be developed!!
-// import conn from "../db/heroku.js";
+import { queryDB, changeDB, deleteDB } from "../db/db-pg.js";
+// import { queryDB, changeDB, deleteDB } from "../db/db-mysql.js";
+
+// ------ fields list  ---------
+// ??
 
 export const getAllEL = (table) =>
   queryDB(`SELECT name, category_id, description, image FROM ${table};`);

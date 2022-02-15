@@ -1,36 +1,34 @@
-import "../../config.cjs";
-import mysql from "mysql";
+import mysql from "mysql2"; //"mysql"
 import ErrorResponse from "../utils/ErrorResponse.js";
+import "../utils/config.cjs";
 
-const conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Sk7175",
-  database: "mydb",
-});
+const connectionString = process.env.NODE_APP_DB_MYSQL1;
+const conn = mysql.createConnection(connectionString);
 
 conn.connect((err) => {
-  if (err) {
-    new ErrorResponse(err, 401);
-  } else {
-    console.log("### Connected to the MySQL server.");
-  }
+  !err
+    ? console.info("### Connected to the MySQL server.")
+    : new ErrorResponse(err, 503);
 });
 
 // mysql package doesnt work with async, so we have to leverage nodepromises
 export const queryDB = (sqlString, values) => {
-  // check mysql for correct method...
   return new Promise((resolve, reject) => {
     if (values) {
       conn.query(sqlString, values, (error, results) => {
-        // values for search-criteria
-        if (error) reject(error);
-        resolve(results);
+        !error && results.length > 0
+          ? resolve(results) //      returns one tuple
+          : reject(
+              new ErrorResponse(error || Error("No results returned."), 404)
+            );
       });
     } else {
       conn.query(sqlString, (error, results) => {
-        if (error) reject(error);
-        resolve(results);
+        if (error) {
+          reject(new ErrorResponse(error, 404));
+        } else {
+          resolve(results);
+        }
       });
     }
   });
@@ -60,8 +58,7 @@ export const deleteDB = (sqlString, values) => {
     if (findDB(values)) {
       sqlString = sqlString.replace("$1", "?");
       conn.query(sqlString, values, (error, results) => {
-        if (error) reject(error);
-        resolve(results); //
+        error ? reject(new ErrorResponse(error, 404)) : resolve();
       });
     }
   });

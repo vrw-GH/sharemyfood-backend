@@ -1,8 +1,8 @@
 class ErrorResponse extends Error {
-  constructor(error, code) {
+  constructor(error, statusCode) {
     super(error);
-    this.myErrCode = code;
-    console.log(`### **${code}**: ${error}`);
+    this.statusCode = statusCode || "000";
+    console.log(`### Error - ${this.statusCode}: ${error}`);
   }
 }
 

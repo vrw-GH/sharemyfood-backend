@@ -7,7 +7,7 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-recipes.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/ErrorResponse.js";
 
 const dbTable = "recipes";
 const fields = [
@@ -72,13 +72,14 @@ recipesRouter
       try {
         const newElement = validateElement(req.body); // generates error if invalid
         // console.log("1");
-        const tuple = await createEL(dbTable, newElement);
+        const tuples = await createEL(dbTable, newElement);
         // console.log("2");
         const info = {
           result: true,
           message: `New data for <${req.body[keyField]}> added.`,
+          records: tuples.length,
         };
-        res.json({ info, tuple });
+        res.json({ info, tuples });
       } catch (error) {
         const info = {
           result: false,
@@ -102,12 +103,13 @@ recipesRouter
     //                                         get single tuple
     const idKey = slug(req.params.id.trim().slice(0, 40));
     try {
-      const tuple = await getOneEL(dbTable, idKey);
+      const tuples = await getOneEL(dbTable, idKey);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.id}>.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -120,17 +122,18 @@ recipesRouter
     //                                         update single tuple
     const idKey = slug(req.params.id.trim().slice(0, 40));
     try {
-      let tuple = await getOneEL(dbTable, idKey);
-      if (!tuple)
+      let tuples = await getOneEL(dbTable, idKey);
+      if (!tuples)
         throw Error(`${dbTable} <${req.params.id}> (couldnt find data).`);
       const newElement = validateElement(req.body); // generates error if invalid
-      tuple = await updateEL(dbTable, newElement, idKey);
-      if (!tuple) throw Error(`Update failed.`);
+      tuples = await updateEL(dbTable, newElement, idKey);
+      if (!tuples) throw Error(`Update failed.`);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.id}> updated.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -143,8 +146,8 @@ recipesRouter
     //  Confirm...                     make sure!! - implement at front-end ?
     const idKey = slug(req.params.id.trim().slice(0, 40));
     try {
-      const tuple = await getOneEL(dbTable, idKey);
-      if (!tuple) throw Error(`Error in delete operation.`);
+      const tuples = await getOneEL(dbTable, idKey);
+      if (!tuples) throw Error(`Error in delete operation.`);
       await deleteEL(dbTable, idKey);
       const info = {
         result: true,

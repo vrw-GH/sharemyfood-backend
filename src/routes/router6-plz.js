@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getAllEL, getOneEL } from "../controllers/dbData-plz.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/ErrorResponse.js";
 
 const dbTable = "plz_de";
 const fields = [
@@ -46,12 +46,13 @@ plzRouter
   .get(async (req, res) => {
     //                                         get single tuple
     try {
-      const tuple = await getOneEL(dbTable, req.params.id, keyField);
+      const tuples = await getOneEL(dbTable, req.params.id, keyField);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.id}>.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,

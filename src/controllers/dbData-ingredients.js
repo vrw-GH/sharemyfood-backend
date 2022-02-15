@@ -1,6 +1,9 @@
 // --------  SELECT A DATABASE FROM HERE ----
-import { queryDB, changeDB, deleteDB } from "../db/pg.js"; // ELEPHANTSQL   - working!
-// import conn from "../db/heroku.js"; //                     HEROKU        - to be developed!!
+import { queryDB, changeDB, deleteDB } from "../db/db-pg.js"; //
+// import { queryDB, changeDB, deleteDB } from "../db/db-mysql.js";
+
+// ------ fields list  ---------
+// ??
 
 export const getAllEL = (table) => {
   const fields = "ingredient_id, ingredient_name, ingredient_unit"; // "*"

@@ -8,7 +8,7 @@ import {
   deleteEL,
 } from "../controllers/dbData-shareitems.js";
 import { validateElement } from "../utils/CommonFunctions.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/ErrorResponse.js";
 
 const dbTable = "shareitems";
 const fields = [
@@ -54,12 +54,13 @@ usersRouter
     // } catch (err) {
     try {
       const newElement = validateElement(req.body, fields, false); // generates error if invalid
-      const tuple = await createEL(dbTable, newElement);
+      const tuples = await createEL(dbTable, newElement);
       const info = {
         result: true,
         message: `New data for <${req.body[keyField]}> added.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -80,12 +81,13 @@ usersRouter
 usersRouter
   .route("/:username")
   .get(async (req, res) => {
-    //                                    get tuples for single username
+    //                                 get tuples for single username
     try {
       const tuples = await getManyEL(dbTable, req.params.username, keyField);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.username}>.`,
+        records: tuples.length,
       };
       res.json({ info, tuples });
     } catch (error) {
@@ -110,12 +112,13 @@ usersRouter
     //                                         get tuple for single id
     console.log(req.params.id);
     try {
-      const tuple = await getOneEL(dbTable, req.params.id, idField);
+      const tuples = await getOneEL(dbTable, req.params.id, idField);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.username}(${req.params.id})>.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -127,17 +130,18 @@ usersRouter
   .post(async (req, res) => {
     //                                         update single tuple
     try {
-      let tuple = await getOneEL(dbTable, req.params.id, idField);
-      if (!tuple)
+      let tuples = await getOneEL(dbTable, req.params.id, idField);
+      if (!tuples)
         throw Error(`${dbTable} <${req.params.id}> (couldnt find data).`);
       const newElement = validateElement(req.body, fields, true); // generates error if invalid
-      tuple = await updateEL(dbTable, newElement, req.params.id, idField);
-      if (!tuple) throw Error(`Update failed.`);
+      tuples = await updateEL(dbTable, newElement, req.params.id, idField);
+      if (!tuples) throw Error(`Update failed.`);
       const info = {
         result: true,
         message: `${dbTable} info for <${req.params.id}> updated.`,
+        records: tuples.length,
       };
-      res.json({ info, tuple });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -149,9 +153,9 @@ usersRouter
   .delete(async (req, res) => {
     //  Confirm...                     make sure!! - implement at front-end ?
     try {
-      let tuple = await getOneEL(dbTable, req.params.id, idField);
-      if (!tuple) throw Error(`Error in delete operation.`);
-      tuple = await deleteEL(dbTable, req.params.id, idField);
+      let tuples = await getOneEL(dbTable, req.params.id, idField);
+      if (!tuples) throw Error(`Error in delete operation.`);
+      tuples = await deleteEL(dbTable, req.params.id, idField);
       const info = {
         result: true,
         message: `${dbTable} <${req.params.username}(${req.params.id})> DELETED.`,

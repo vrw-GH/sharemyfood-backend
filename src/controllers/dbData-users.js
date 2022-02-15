@@ -1,8 +1,9 @@
 // --------  SELECT A DATABASE FROM HERE ----
-// ELEPHANTSQL                                                - working!
-import { queryDB, changeDB, deleteDB } from "../db/pg.js";
-// HEROKU                                                  - to be developed!!
-// import conn from "../db/heroku.js";
+import { queryDB, changeDB, deleteDB } from "../db/db-pg.js";
+// import { queryDB, changeDB, deleteDB } from "../db/db-mysql.js";
+
+// ------ fields list  ---------
+// ??
 
 export const getAllEL = (table) => {
   const fields = "username, email, profilepic";
@@ -13,13 +14,12 @@ export const getOneEL = (table, id) => {
   const fields = "*";
   return queryDB(
     `SELECT ${fields} FROM ${table} 
-    WHERE LOWER(username) = LOWER($1);`,
+    WHERE LOWER(username) = LOWER(?);`,
     [id]
   );
 };
 
 export const createEL = (table, element) => {
-  console.log(element);
   const fields = "(username, email, password) VALUES($1, $2, $3)";
   return changeDB(`INSERT INTO ${table} ${fields} ;`, [
     element.username,
@@ -53,7 +53,7 @@ export const updateEL = (table, element, id) => {
 };
 
 export const deleteEL = (table, id) => {
-  deleteDB(
+  return deleteDB(
     `DELETE FROM ${table} 
     WHERE LOWER(username) = LOWER($1);`,
     [id]
