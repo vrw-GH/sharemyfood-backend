@@ -1,5 +1,5 @@
 import mysql from "mysql2"; //"mysql"
-import ErrorResponse from "../utils/ErrorResponse.js";
+import ErrorResponse from "../utils/errorResponse.js";
 import "../utils/config.cjs";
 
 const connectionString = process.env.NODE_APP_DB_MYSQL1;

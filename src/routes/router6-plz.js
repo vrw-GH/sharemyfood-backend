@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getAllEL, getOneEL } from "../controllers/dbData-plz.js";
-// TODO import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "plz_de";
 const fields = [
