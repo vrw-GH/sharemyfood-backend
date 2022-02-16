@@ -7,8 +7,8 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-shareitems.js";
-import { validateElement } from "../utils/CommonFunctions.js";
-// TODO import ErrorResponse from "../utils/ErrorResponse.js";
+import { validateElement } from "../utils/commonFunctions.js";
+// TODO import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "shareitems";
 const fields = [

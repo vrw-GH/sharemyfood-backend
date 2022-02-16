@@ -6,7 +6,7 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-users.js";
-// TODO import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "users";
 const fields = [

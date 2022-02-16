@@ -7,7 +7,7 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-recipes.js";
-// TODO import ErrorResponse from "../utils/ErrorResponse.js";
+// TODO import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "recipes";
 const fields = [

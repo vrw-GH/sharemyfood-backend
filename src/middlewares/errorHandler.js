@@ -8,13 +8,13 @@ const errorHandler = (err, req, res, next) => {
       err.message = "Invalid login";
       break;
     default:
-      // no change
+      // err.message = no change
       break;
   }
   switch (err.statusCode) {
     // custom codes :- messages
     case "000":
-      err.message = "This error code not defined.";
+      err.message = "Error code not defined.";
       break;
     default:
       err.message = "Unknown Error.";
