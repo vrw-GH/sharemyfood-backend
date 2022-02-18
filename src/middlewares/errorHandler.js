@@ -1,7 +1,8 @@
 const errorHandler = (err, req, res, next) => {
-  console.log("###Errorhandler#### Origin-code: ", err.code);
-  console.log("                    Origin-message: ", err.message);
-  console.log("                    Status Code: ", err.statusCode);
+  console.log("\n### Error-handler: ---------------- ***");
+  console.log("    Origin-code: ", err.code);
+  console.log("    Origin-message: ", err.message);
+  console.log("    Status Code: ", err.statusCode);
   switch (err.message) {
     // simplified messages
     case "jwt malformed":
@@ -17,11 +18,12 @@ const errorHandler = (err, req, res, next) => {
       err.message = "Error code not defined.";
       break;
     default:
-      err.message = "Unknown Error.";
+      // err.message = No change;
       break;
   }
   process.env.NODE_ENV != "production" &&
-    console.log("###errorhandler#### Stack: ", err.stack);
+    console.log("\n### Error-stack:  ---------------- ***\n   ", err.stack);
+  console.log("### ------------------------------ /\n");
   res.status(err.statusCode || 500).json({ error: err.message });
 };
 

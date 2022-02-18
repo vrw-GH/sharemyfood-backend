@@ -36,7 +36,10 @@ ingredientsRouter
   .get(async (req, res) => {
     //                                         get all tuples
     try {
-      const tuples = await getAllEL(dbTable);
+      const tuples = await getAllEL(
+        dbTable,
+        "ingredient_id, ingredient_name, ingredient_unit"
+      );
       const info = {
         result: true,
         message: `All ${dbTable} list.`,

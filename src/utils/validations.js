@@ -1,4 +1,4 @@
-export const validateElement = (element, fields, toUpdate) => {
+const validateElements = (element, fields, toUpdate) => {
   const tester = element;
   try {
     // console.log(JSON.stringify(tester)); // if not json.
@@ -6,18 +6,27 @@ export const validateElement = (element, fields, toUpdate) => {
       const field = e[0];
       const creation = e[1];
       const updatable = e[2];
+      // console.log(
+      //   "validation for",
+      //   toUpdate ? "Updating" : "Creating",
+      //   ": <",
+      //   field,
+      //   creation ? "> needed" : "> notneeded",
+      //   updatable ? "canupdate" : "cannotupdate"
+      // );
+      // console.log(field, ":", tester[field]);
       if (toUpdate) {
         // when updating
         if (tester[field] !== undefined) {
           if (!updatable) {
             const msg = `Update <${field}> disallowed.`;
             console.log(msg);
-            throw new Error(msg);
+            throw Error(msg);
           }
           if (creation && !tester[field]) {
             const msg = `<${field}> has error: (${tester[field]})`;
             console.log(msg);
-            throw new Error(msg);
+            throw Error(msg);
           }
         }
       } else {
@@ -25,13 +34,15 @@ export const validateElement = (element, fields, toUpdate) => {
         if (creation && !tester[field]) {
           const msg = `<${field}> has error: (${tester[field]})`;
           console.log(msg);
-          throw new Error(msg);
+          throw Error(msg);
         }
       }
     });
-    // any other validations
+    // other validations
     return element;
   } catch (e) {
-    throw new Error(`Data validation failed- ${e.message}.`);
+    throw Error(`Data validation failed- ${e.message}.`);
   }
 };
+
+export default validateElements;

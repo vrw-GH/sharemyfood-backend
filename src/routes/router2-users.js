@@ -1,4 +1,5 @@
 import { Router } from "express";
+import jwt from "jsonwebtoken";
 import {
   getAllEL,
   getOneEL,
@@ -6,12 +7,14 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-users.js";
-// TODO import ErrorResponse from "../utils/errorResponse.js";
+import validateElements from "../utils/validations.js";
+import verifyJWT from "../middlewares/verifyJWT.js";
+import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "users";
 const fields = [
-  //field,creating,updatable
-  ["username", true, false],
+  //fieldname, creating, updatable
+  ["username", true, false], // is keyfield
   ["email", true, true],
   ["password", true, true],
   ["profilepic", false, true], //text
@@ -20,60 +23,14 @@ const fields = [
 ];
 const keyField = fields[0][0];
 
-const validateElement = (element, toUpdate) => {
-  const tester = element;
-  try {
-    // console.log(JSON.stringify(tester)); // if not json.
-    fields.forEach((e) => {
-      const field = e[0];
-      const creation = e[1];
-      const updatable = e[2];
-      // console.log(
-      //   "validation for",
-      //   toUpdate ? "Updating" : "Creating",
-      //   ": <",
-      //   field,
-      //   creation ? "> needed" : "> notneeded",
-      //   updatable ? "canupdate" : "cannotupdate"
-      // );
-      // console.log(field, ":", tester[field]);
-      if (toUpdate) {
-        // when updating
-        if (tester[field] !== undefined) {
-          if (!updatable) {
-            const msg = `Update <${field}> disallowed.`;
-            console.log(msg);
-            throw Error(msg);
-          }
-          if (creation && !tester[field]) {
-            const msg = `<${field}> has error: (${tester[field]})`;
-            console.log(msg);
-            throw Error(msg);
-          }
-        }
-      } else {
-        // when creating
-        if (creation && !tester[field]) {
-          const msg = `<${field}> has error: (${tester[field]})`;
-          console.log(msg);
-          throw Error(msg);
-        }
-      }
-    });
-    // other validations
-    return element;
-  } catch (e) {
-    throw Error(`Data validation failed- ${e.message}.`);
-  }
-};
-
 const usersRouter = Router();
 usersRouter
   .route("/")
+
   .get(async (req, res) => {
     //                                         get all tuples
     try {
-      const tuples = await getAllEL(dbTable);
+      const tuples = await getAllEL(dbTable, "username");
       const info = {
         result: true,
         message: `All ${dbTable} list.`,
@@ -85,34 +42,55 @@ usersRouter
       res.status(404).json({ info, systemError: error.message });
     }
   })
-  .post(async (req, res) => {
-    //                                         create new tuple
-    try {
-      await getOneEL(dbTable, req.body[keyField]);
-      const info = {
-        result: false,
-        message: `${keyField} <${req.body[keyField]}> already exists.`,
-      };
-      res.status(406).json({ info, systemError: null });
-    } catch (err) {
+
+  .post(
+    (req, res, next) => {
+      const required = fields.filter((e) => e[1]);
+      if (Object.keys(req.body).length < required.length)
+        throw new ErrorResponse(
+          `Please provide JSON data. {${required.map((e) => e[0])}}`,
+          400
+        );
+      next();
+    },
+    async (req, res) => {
+      // *                              signup (create tuple)
       try {
-        const newElement = validateElement(req.body, false); // generates error if invalid
-        const tuples = await createEL(dbTable, newElement);
-        const info = {
-          result: true,
-          message: `New data for <${req.body[keyField]}> added.`,
-          records: tuples.length,
-        };
-        res.json({ info, tuples });
-      } catch (error) {
+        await getOneEL(dbTable, req.body[keyField]);
         const info = {
           result: false,
-          message: `Error creating <${req.body[keyField]}>.`,
+          message: `${keyField} <${req.body[keyField]}> already exists.`,
         };
-        res.status(406).json({ info, systemError: error.message });
+        res.status(406).json({ info, systemError: null });
+      } catch (err) {
+        try {
+          const newElement = validateElements(req.body, fields, false); // generates error
+          const tuples = await createEL(dbTable, newElement);
+          const info = {
+            result: true,
+            message: `New data for <${req.body[keyField]}> added.`,
+            records: tuples.length,
+          };
+          const token = jwt.sign(
+            { username: req.body[keyField] },
+            process.env.NODE_APP_JWT,
+            {
+              expiresIn: 60 * 60,
+            }
+          );
+          // console.log(jwt.decode(token)); //* -testing only   ,{complete:true}
+          res.json({ info, token, tuples }); //! -remove tuples?
+        } catch (error) {
+          const info = {
+            result: false,
+            message: `Error creating <${req.body[keyField]}>.`,
+          };
+          res.status(406).json({ info, systemError: error.message });
+        }
       }
     }
-  })
+  )
+
   .delete((req, res) => {
     const info = {
       result: false,
@@ -121,9 +99,13 @@ usersRouter
     res.status(403).json({ info, systemError: "" });
   });
 
+// --------------------------------------------------------
+
 usersRouter
   .route("/:id")
-  .get(async (req, res) => {
+
+  .get(verifyJWT, async (req, res) => {
+    //*                                        login / get details
     //                                         get single tuple
     try {
       const tuples = await getOneEL(dbTable, req.params.id);
@@ -132,22 +114,30 @@ usersRouter
         message: `${dbTable} info for <${req.params.id}>.`,
         records: tuples.length,
       };
-      res.json({ info, tuples });
+      const token = jwt.sign(
+        { username: req.params.id },
+        process.env.NODE_APP_JWT,
+        {
+          expiresIn: 60 * 60,
+        }
+      );
+      res.json({ info, token, tuples });
     } catch (error) {
       const info = {
         result: false,
-        message: `${dbTable} <${req.params.id}> does not exist.`,
+        message: `${dbTable} <${req.params.id}> login error.`,
       };
       res.status(404).json({ info, systemError: error.message });
     }
   })
-  .post(async (req, res) => {
+
+  .post(verifyJWT, async (req, res) => {
     //                                         update single tuple
     try {
       let tuples = await getOneEL(dbTable, req.params.id);
       if (!tuples)
         throw Error(`${dbTable} <${req.params.id}> (couldnt find data).`);
-      const newElement = validateElement(req.body, true); // generates error if invalid
+      const newElement = validateElements(req.body, fields, true);
       tuples = await updateEL(dbTable, newElement, req.params.id);
       if (!tuples) throw Error(`Update failed.`);
       const info = {
@@ -164,8 +154,9 @@ usersRouter
       res.status(404).json({ info, systemError: error.message });
     }
   })
-  .delete(async (req, res) => {
-    //  Confirm...                     make sure!! - implement at front-end ?
+
+  .delete(verifyJWT, async (req, res) => {
+    //TODO  Confirm... make sure!! - implement at front-end ?
     try {
       const tuples = await getOneEL(dbTable, req.params.id);
       if (!tuples) throw Error(`Error in delete operation.`);
