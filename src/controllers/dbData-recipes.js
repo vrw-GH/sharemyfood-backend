@@ -7,9 +7,7 @@ import slug from "slug";
 // ------ fields list  ---------
 // ??
 
-export const getAllEL = (table) => {
-  const fields =
-    "title, category, image, title_img, ingredients, username, slug"; // "*"
+export const getAllEL = (table, fields) => {
   return queryDB(`SELECT ${fields} FROM ${table};`);
 };
 

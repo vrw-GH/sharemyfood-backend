@@ -11,8 +11,7 @@ import { queryDB, changeDB, deleteDB } from "../db/db-pg.js";
 // ["message", false, true], //text
 // ["plz", true, true], //text(20)
 
-export const getAllEL = (table) => {
-  const fields = "*";
+export const getAllEL = (table, fields) => {
   return queryDB(`SELECT ${fields} FROM ${table};`);
 };
 

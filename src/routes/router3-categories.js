@@ -35,7 +35,10 @@ categoriesRouter
   .get(async (req, res) => {
     //                                         get all tuples
     try {
-      const tuples = await getAllEL(dbTable);
+      const tuples = await getAllEL(
+        dbTable,
+        "name, category_id, description, image"
+      );
       const info = {
         result: true,
         message: `All ${dbTable} list.`,

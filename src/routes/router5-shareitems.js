@@ -30,7 +30,7 @@ usersRouter
   .get(async (req, res) => {
     //                                       get all tuples
     try {
-      const tuples = await getAllEL(dbTable);
+      const tuples = await getAllEL(dbTable, "*");
       const info = {
         result: true,
         message: `All ${dbTable} list.`,

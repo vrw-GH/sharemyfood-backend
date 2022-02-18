@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 import cors from "cors";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -6,20 +7,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 import "./src/utils/config.cjs";
+// import { name as appName, version as appVer } from "./package.json";
+// const data = fs.readFileSync("./package.json");
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
 const APPDATA = {
-  PROJECT_NAME: process.env.NODE_APP_PROJECT_NAME || "Node.js Project",
+  PROJECT_NAME: packageJSON.name || "Node.js Project",
+  PROJECT_VERSION: "v" + packageJSON.version || "0.1",
   DEV_NAME: process.env.NODE_APP_DEV_NAME || "Victor",
   DEV_EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
   DEV_PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
   DEV_LOCATION: process.env.NODE_APP_DEV_LOCATION || "83707, Germany",
+  HOST: process.env.HOST || "http://127.0.0.1",
+  PORT: process.env.PORT || 5000,
 };
-const HOST = process.env.HOST || "http://127.0.0.1";
-const PORT = process.env.PORT || 5000;
 
 // ------------ MY MODULES -----------
 import errorHandler from "./src/middlewares/errorHandler.js";
 // ------------ MY ROUTES -----------
-import baseRoute from "./src/routes/router0-indexpage.js";
+import authRouter from "./src/routes/router-auth.js";
+import baseRoute from "./src/routes/router-indexpage.js";
 import recipesRouter from "./src/routes/router1-recipes.js";
 import usersRouter from "./src/routes/router2-users.js";
 import categoriesRouter from "./src/routes/router3-categories.js";
@@ -27,7 +34,6 @@ import ingredientsRouter from "./src/routes/router4-ingredients.js";
 import shareitemsRouter from "./src/routes/router5-shareitems.js";
 import plzRouter from "./src/routes/router6-plz.js";
 
-const route0 = ["/", "Info Page"];
 const endPoints = {
   route0: ["/", "Info Page", baseRoute], //props issue!!
   route1: ["/api/recipes", "API Recipes", recipesRouter],
@@ -37,6 +43,11 @@ const endPoints = {
   route5: ["/api/shareitems", "API Shareitems", shareitemsRouter],
   route6: ["/api/plz-de", "API PostalCodes DE", plzRouter],
 };
+
+baseRoute.appData = APPDATA;
+baseRoute.endPoints = endPoints;
+authRouter.appData = APPDATA;
+
 // ------------ MAIN APP -----------
 const app = express();
 const corsOptions = {
@@ -49,30 +60,24 @@ app.set("view engine", "ejs");
 app.use(express.static(join(__dirname, "uploads"))); //for serving something
 app.use(express.json());
 
-// ----------- base 0 router to info page ----
-app.get(endPoints["route0"][0], (req, res) =>
-  res.status(501).render("index.ejs", { APPDATA, endPoints, HOST, PORT })
-);
-
 // ----------- iterate all routers  ----
-for (let index = 1; index < Object.keys(endPoints).length; index++) {
+app.use("/auth", authRouter);
+for (let index = 0; index < Object.keys(endPoints).length; index++) {
   var key = "route" + index;
   app.use(endPoints[key][0], endPoints[key][2]);
 }
 
 // ----------- Handle unknown endpoint (a web-view)----
 app.get("*", (req, res, next) => {
-  res.status(404).send(`<h1>${APPDATA.PROJECT_NAME} :- </h1> 
-      <h3>ERROR: Routing or page not found. </h3>
-      Back: <a href="${HOST}:${PORT}${route0[0]}">${route0[1]}</a>`);
+  res.status(404).render("no_route.ejs", { APPDATA });
 });
 
 // ----------- lastly error handling  ----
 app.use(errorHandler);
 
 // ----------- activate server!  ----
-app.listen(PORT, () =>
+app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${HOST}:${PORT}\n`
+    `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
   )
 );

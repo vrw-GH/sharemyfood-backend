@@ -8,8 +8,7 @@ import { queryDB, changeDB, deleteDB } from "../db/db-pg.js";
 //   ["longitude", false, true], //numeric
 //   ["latitude", false, true], //numeric
 
-export const getAllEL = (table) => {
-  const fields = "postal_code, place_name, longitude, latitude";
+export const getAllEL = (table, fields) => {
   return queryDB(`SELECT ${fields} FROM ${table};`);
 };
 

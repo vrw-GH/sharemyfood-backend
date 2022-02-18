@@ -5,8 +5,7 @@ import { queryDB, changeDB, deleteDB } from "../db/db-pg.js"; //
 // ------ fields list  ---------
 // ??
 
-export const getAllEL = (table) => {
-  const fields = "ingredient_id, ingredient_name, ingredient_unit"; // "*"
+export const getAllEL = (table, fields) => {
   return queryDB(`SELECT ${fields} FROM ${table};`);
 };
 
