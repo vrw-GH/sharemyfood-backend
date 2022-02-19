@@ -1,6 +1,6 @@
 {
   "name": "sharemyfood-backend",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "API for the Share My Food project",
   "main": "index.js",
   "type": "module",
