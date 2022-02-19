@@ -31,4 +31,5 @@ Course Instructor - Jorge Paul (WBS Coding School)<br>
 <br>
 (WBS WD#020 Group - Jan 2022)<br>
 
-<img src="%PUBLIC%/site_img.png" alt="sample view">
+![](https://github.com/vrw-GH/sharemyfood-backend/blob/12df2b5f36d617ee408eef435e23ad8db9da5987/public/site_img.png)
+
