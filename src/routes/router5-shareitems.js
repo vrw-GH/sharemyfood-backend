@@ -8,7 +8,7 @@ import {
   deleteEL,
 } from "../controllers/dbData-shareitems.js";
 import { validateElement } from "../utils/commonFunctions.js";
-//TODO import ErrorResponse from "../utils/errorResponse.js"
+// TODO import ErrorResponse from "../utils/errorResponse.js"
 
 const dbTable = "shareitems";
 const fields = [
