@@ -6,7 +6,7 @@ import {
   updateEL,
   deleteEL,
 } from "../controllers/dbData-categories.js";
-// TODO import ErrorResponse from "../utils/errorResponse.js";
+//TODO import ErrorResponse from "../utils/errorResponse.js"
 
 const dbTable = "category";
 const fields = ["category_id", "name"];
