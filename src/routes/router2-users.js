@@ -9,7 +9,7 @@ import {
 } from "../controllers/dbData-users.js";
 import validateElements from "../utils/validations.js";
 import verifyJWT from "../middlewares/verifyJWT.js";
-import ErrorResponse from "../utils/errorResponse.js";
+//! import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "users";
 const fields = [
