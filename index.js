@@ -8,7 +8,6 @@ const __dirname = dirname(__filename);
 
 // ------------ MY MODULES -----------
 import errorHandler from "./src/middlewares/errorHandler.js";
-// import errorHandler from join(__dirname, "/middlewares/errorHandler.js")
 // ------------ MY ROUTES -----------
 import authRouter from "./src/routes/router-auth.js";
 import baseRoute from "./src/routes/router-indexpage.js";
