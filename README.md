@@ -15,9 +15,9 @@
   &emsp;(Stable) https://final-project-wd020.vercel.app  <br>
   &emsp;(Beta) https://vrwgh-finalprojectwd020.netlify.app  <br>
 <br>
-<h4><li>V1</li></h4>
+<h4><li>V2</li></h4>
 <h3>- Backend:</h3>
-  &emsp;https://  <br>
+  &emsp;https://sharemyfood-backend-v2.herokuapp.com  <br>
 <h3>- Frontend:</h3>
   &emsp;(Beta) https://  <br>
 
@@ -32,4 +32,3 @@ Course Instructor - Jorge Paul (WBS Coding School)<br>
 (WBS WD#020 Group - Jan 2022)<br>
 
 ![](https://github.com/vrw-GH/sharemyfood-backend/blob/12df2b5f36d617ee408eef435e23ad8db9da5987/public/site_img.png)
-
