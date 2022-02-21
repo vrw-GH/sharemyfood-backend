@@ -18,7 +18,7 @@ const APPDATA = {
   DEV_EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
   DEV_PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
   DEV_LOCATION: process.env.NODE_APP_DEV_LOCATION || "83707, Germany",
-  HOST: process.env.HOST || "http://127.0.0.1",
+  HOST: process.env.HOST || packageJSON.homepage || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
 };
 
@@ -47,7 +47,6 @@ const endPoints = {
 baseRoute.appData = APPDATA;
 baseRoute.endPoints = endPoints;
 authRouter.appData = APPDATA;
-const PORT = APPDATA.PORT;
 
 // ------------ MAIN APP -----------
 const app = express();
@@ -77,7 +76,7 @@ app.get("*", (req, res, next) => {
 app.use(errorHandler);
 
 // ----------- activate server!  ----
-app.listen(PORT, () =>
+app.listen(APPDATA.PORT, () =>
   console.info(
     `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
   )
