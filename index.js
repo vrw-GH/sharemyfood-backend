@@ -47,6 +47,7 @@ const endPoints = {
 baseRoute.appData = APPDATA;
 baseRoute.endPoints = endPoints;
 authRouter.appData = APPDATA;
+const PORT = APPDATA.PORT;
 
 // ------------ MAIN APP -----------
 const app = express();
@@ -76,7 +77,7 @@ app.get("*", (req, res, next) => {
 app.use(errorHandler);
 
 // ----------- activate server!  ----
-app.listen(process.env.PORT || APPDATA.PORT || 5000, () =>
+app.listen(PORT, () =>
   console.info(
     `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
   )
