@@ -17,7 +17,7 @@ export const validateElement = (element, fields, toUpdate) => {
           if (creation && !tester[field]) {
             const msg = `<${field}> has error: (${tester[field]})`;
             console.log(msg);
-            throw new Error(msg);
+            throw Error(msg);
           }
         }
       } else {
