@@ -76,7 +76,7 @@ app.get("*", (req, res, next) => {
 app.use(errorHandler);
 
 // ----------- activate server!  ----
-app.listen(APPDATA.PORT, () =>
+app.listen(process.env.PORT || APPDATA.PORT || 5000, () =>
   console.info(
     `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
   )
