@@ -10,16 +10,16 @@
 
 <h4><li>V0</li></h4>
 <h3>- Backend:</h3>
-  &emsp;https://sharemyfood-backend.herokuapp.com  <br>
+  &emsp; <a href="https://sharemyfood-backend.herokuapp.com" target="_blank">https://sharemyfood-backend.herokuapp.com</a><br>
 <h3>- Frontend:</h3>
-  &emsp;(Stable) https://final-project-wd020.vercel.app  <br>
-  &emsp;(Beta) https://vrwgh-finalprojectwd020.netlify.app  <br>
+  &emsp;(Stable) <a href="https://final-project-wd020.vercel.app" target="_blank">https://final-project-wd020.vercel.app</a><br>
+  &emsp;(Beta) <a href="https://vrwgh-finalprojectwd020.netlify.app" target="_blank">https://vrwgh-finalprojectwd020.netlify.app</a><br>
 <br>
 <h4><li>V2</li></h4>
 <h3>- Backend:</h3>
-  &emsp;https://sharemyfood-backend-v2.herokuapp.com  <br>
+  &emsp;<a href="https://sharemyfood-backend-v2.herokuapp.com" target="_blank">https://sharemyfood-backend-v2.herokuapp.com</a><br>
 <h3>- Frontend:</h3>
-  &emsp;(Beta) https://  <br>
+  &emsp;(Beta) <a href="https://" target="_blank">https://</a><br>
 
 <br>
 
