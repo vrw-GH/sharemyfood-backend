@@ -56,10 +56,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.set("view engine", "ejs");
-app.use(express.static(join(__dirname, "uploads"))); //for serving something
+// app.use(express.static(join(__dirname, "uploads"))); // for serving something (mutler?)
 app.use(express.json());
 
-// ----------- terate all routers  ----
+// ----------- iterate all routers  ----
 app.use("/auth", authRouter);
 for (let index = 0; index < Object.keys(endPoints).length; index++) {
   var key = "route" + index;
