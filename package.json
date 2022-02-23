@@ -1,6 +1,8 @@
 {
-  "name": "sharemyfood-backend",
+  "name": "share-my-food-backend",
+  "suffix": "final-project-wbs#020",
   "version": "2.0.0",
+  "info": "",
   "description": "BACKEND for Share My Food project",
   "main": "index.js",
   "type": "module",  
@@ -36,6 +38,12 @@
   },
   "emmet.includeLanguages": {
     "ejs": "html"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

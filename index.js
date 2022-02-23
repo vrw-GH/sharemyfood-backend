@@ -10,13 +10,21 @@ const __dirname = dirname(__filename);
 import "./src/utils/config.cjs";
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
 const APPDATA = {
-  PROJECT_NAME: packageJSON.name || "Node.js Project",
-  PROJECT_VERSION: "v" + packageJSON.version || "0.1",
-  DEV_NAME: process.env.NODE_APP_DEV_NAME || "Victor",
-  DEV_EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
-  DEV_PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
-  DEV_LOCATION: process.env.NODE_APP_DEV_LOCATION || "83707, Germany",
-  DEV_WEBSITE: packageJSON.homepage || process.env.HOST || "http://127.0.0.1",
+  TITLE: packageJSON.name || "Node.js Project",
+  NAME:
+    packageJSON.name
+      .replace(/-/g, " ")
+      .replace(/(^\w{1})|(\s+\w{1})/g, (chr) => chr.toUpperCase()) || "",
+  VER: "v" + packageJSON.version || "0.1",
+  INFO: packageJSON.info || "",
+  DESCR: packageJSON.description || "new project",
+  DEVTEAM: process.env.NODE_APP_DEV_TEAM || "",
+  DEVLEAD: process.env.NODE_APP_DEV_LEAD || "Victor Wright",
+  EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
+  PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
+  LOCATION: process.env.NODE_APP_DEV_ADDR || "83707, Germany",
+  WEBSITE: packageJSON.homepage || process.env.HOST || "http://127.0.0.1",
+  ROOT: __dirname || "/",
   HOST: process.env.HOST || packageJSON.homepage || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
 };
@@ -77,6 +85,6 @@ app.use(errorHandler);
 // ----------- Activate server!  ----
 app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
+    `\n${APPDATA.NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n- Root is ${APPDATA.ROOT}\n`
   )
 );

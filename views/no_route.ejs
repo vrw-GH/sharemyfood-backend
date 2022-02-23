@@ -1,15 +1,5 @@
-<%- include("_header.ejs") %>  
-<body style="padding-left: 30px">
-   <h1><%= APPDATA.PROJECT_NAME %></h1>
-   <h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
-   <h3 style="color: red;"><i>ERROR: Routing or page not found. </i></h3>
-   <p>Back: <a href="/">Info Page</a></p>
-   <hr/>   
-   <pre>
-   Developer: <%= `${APPDATA.DEV_NAME}` %>
-   Contact:   Email: <%= `${APPDATA.DEV_EMAIL}` %> 
-              Tel: <%= `${APPDATA.DEV_PHONE}` %> 
-   Location:  <%= `${APPDATA.DEV_LOCATION}` %> 
-   </pre>
-</body>
-</html>
+<%- include("_header.ejs") %>
+<h2> - </h2>
+<h3 style="color: red;"><i>ERROR: Routing or page not found. </i></h3>
+<p>Back: <a href="/">Info Page</a></p>
+<%- include("_footer.ejs") %>

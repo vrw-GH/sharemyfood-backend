@@ -1,21 +1,10 @@
 <%- include("_header.ejs") %>
-<body style="padding-left: 30px">
-   <h1>Authentication for <%= APPDATA.PROJECT_NAME %></h1>
-   <h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
-   <h3 style="color: red;"> <i>Use <b>POST</b> methods for following routes: </i></h3>
-   <ul>
-      <li>
-         <a href="/auth/login" title="/auth/login">login</a>: &nbsp; params: username, password
-      </li>      
-      
-   </ul> 
-   <p>Back: <a href="/">Info Page</a></p>
-   <hr/>   
-   <pre>
-   Developer: <%= `${APPDATA.DEV_NAME}` %>
-   Contact:   Email: <%= `${APPDATA.DEV_EMAIL}` %> 
-              Tel: <%= `${APPDATA.DEV_PHONE}` %> 
-   Location:  <%= `${APPDATA.DEV_LOCATION}` %> 
-   </pre>
-</body>
-</html>
+<h2> - Authentication -</h2>
+<h3 style="color: red;"> <i>Use <b>POST</b> methods for following routes: </i></h3>
+<ul>
+   <li>
+      <a href="/auth/login" title="/auth/login">login</a>: &nbsp; params: username, password
+   </li>      
+</ul> 
+<p>Back: <a href="/">Info Page</a></p>
+<%- include("_footer.ejs") %>

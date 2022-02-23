@@ -1,20 +1,17 @@
 <%- include("_header.ejs") %>
-<body style="padding-left: 30px">
-   <h1>API for <%= APPDATA.PROJECT_NAME %></h1>
-   Release: <%= APPDATA.PROJECT_VERSION %>
-   <h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
-   <h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
-   <ul>
-      <% Object.keys(endPoints).forEach((ep)=>{ %>
-         <li>
-            <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %>>
-               <%- `${endPoints[ep][1]}` %>
-            </a>
-         </li>
-      <% }); %>
-   </ul>
-   <pre>
-   <strong>STANDARD RESPONSE FORMAT : </strong>
+<h2> - API -</h2>
+<h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
+<ul>
+   <% Object.keys(endPoints).forEach((ep)=>{ %>
+      <li>
+         <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %>>
+            <%- `${endPoints[ep][1]}` %>
+         </a>
+      </li>
+   <% }); %>
+</ul>
+<pre>
+<strong>STANDARD RESPONSE FORMAT : </strong>
    {
       "info": {
          "result":true,                         // or false -- for error condition
@@ -26,21 +23,10 @@
          {"field":"data","field2":"data2"   etc... }
       ]
    }
-   </pre>
-   <h3 style="color: red;"><i> - Special Routes : </i></h3>
-      <ul>
-         <li><a href="./auth" title="/auth">Authentication</a></li>
-      </ul>
-   <p> </p>
-   <hr/>
-   <pre>
-   We are currently using the PostgreSQL database.
-   Deployed at: <a href=<%= `${APPDATA.DEV_WEBSITE}`%>><%= `${APPDATA.DEV_WEBSITE}` %></a>
-   ---------------
-   Developer: <%= `${APPDATA.DEV_NAME}` %>
-   Contact:   Email: <%= `${APPDATA.DEV_EMAIL}` %> 
-              Tel: <%= `${APPDATA.DEV_PHONE}` %> 
-   Location:  <%= `${APPDATA.DEV_LOCATION}` %> 
-   </pre>
-</body>
-</html>
+</pre>
+<h3 style="color: red;"><i> - Special Routes : </i></h3>
+<ul>
+   <li><a href="./auth" title="/auth">Authentication</a></li>
+</ul>
+<p> </p>
+<%- include("_footer.ejs") %>

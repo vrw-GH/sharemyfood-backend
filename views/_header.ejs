@@ -8,5 +8,10 @@
    <link rel="manifest" href="../public/manifest.json" />
    <link rel="shortcut icon" href="../public/favicon.ico" />
    <link rel="stylesheet" href="../public/stylesheets/style.css"/>
-   <title><%= APPDATA.PROJECT_NAME %></title>
+   <title><%= APPDATA.NAME %></title>
 </head>
+<body style="padding-left: 30px">
+<h1><%= APPDATA.NAME %></h1>
+Release: <%= APPDATA.VER %> <br>
+Project : <%= APPDATA.DESCR %>
+<h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
