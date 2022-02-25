@@ -18,6 +18,7 @@ const APPDATA = {
   VER: "v" + packageJSON.version || "0.1",
   INFO: packageJSON.info || "",
   DESCR: packageJSON.description || "new project",
+  MODE: process.env.NODE_APP_DEV_MODE || "Dev.",
   DEVTEAM: process.env.NODE_APP_DEV_TEAM || "",
   DEVLEAD: process.env.NODE_APP_DEV_LEAD || "Victor Wright",
   EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
@@ -51,30 +52,33 @@ const endPoints = {
   route6: ["/api/plz-de", "API PostalCodes DE", plzRouter],
 };
 
+// ------------ ATTACH DATAVARIABLES TO ROUTES -----------
 baseRoute.appData = APPDATA;
 baseRoute.endPoints = endPoints;
 authRouter.appData = APPDATA;
 
 // ------------ MAIN APP -----------
 const app = express();
-const corsOptions = {
-  // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
-  origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers
-};
-app.use(cors(corsOptions));
 app.set("view engine", "ejs");
-// app.use(express.static(join(__dirname, "uploads"))); // for serving something (mutler?)
 app.use(express.json());
+app.use(
+  cors({
+    // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers
+  })
+);
+app.use("/uploads", express.static(join(__dirname, "uploads"))); // for serving something (mutler?)
+app.use("/public", express.static(join(__dirname, "/public")));
 
 // ----------- iterate all routers  ----
-app.use("/auth", authRouter);
 for (let index = 0; index < Object.keys(endPoints).length; index++) {
   var key = "route" + index;
   app.use(endPoints[key][0], endPoints[key][2]);
 }
+app.use("/auth", authRouter);
 
-// ----------- Handle unknown endpoint (a web-view)----
+// ----------- Handle unknown endpoint ----
 app.get("*", (req, res, next) => {
   res.status(404).render("no_route.ejs", { APPDATA });
 });

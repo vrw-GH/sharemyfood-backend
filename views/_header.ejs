@@ -5,13 +5,27 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="theme-color" content="#000000" />
-   <link rel="manifest" href="../public/manifest.json" />
-   <link rel="shortcut icon" href="../public/favicon.ico" />
-   <link rel="stylesheet" href="../public/stylesheets/style.css"/>
+   <link rel="manifest" href="/public/manifest.json" />
+   <link rel="shortcut icon" href="/public/favicon.ico" />
+   <link rel="stylesheet" href="/public/stylesheets/style.css"/>
    <title><%= APPDATA.NAME %></title>
 </head>
 <body style="padding-left: 30px">
 <h1><%= APPDATA.NAME %></h1>
-Release: <%= APPDATA.VER %> <br>
-Project : <%= APPDATA.DESCR %>
-<h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
+<table style="width:100%; border-spacing: 10px;">
+   <tr>
+      <td>
+<pre>
+<strong>Release: <%= APPDATA.VER %> <i>(<%= APPDATA.MODE %>)</i></strong>
+Description : <%= APPDATA.DESCR %>
+</pre>
+      </td>
+      <td style="vertical-align: center">
+<pre>
+<h5><i><%= `${APPDATA.INFO}` %></i></h5>
+</pre>
+      </td>
+   </tr>
+</table>
+<h4><strong>Now served via: &emsp; </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
+<hr><br>

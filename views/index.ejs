@@ -1,17 +1,27 @@
 <%- include("_header.ejs") %>
 <h2> - API -</h2>
+<br>
 <h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
 <ul>
+   <li>
+      <a href=<%= `${endPoints.route0[0]}`%> title=<%=`${endPoints.route0[0]}` %> target="_self">
+         <%- `${endPoints.route0[1]}` %>
+      </a>
+   </li>
    <% Object.keys(endPoints).forEach((ep)=>{ %>
+      <% if (ep != "route0") { %>
       <li>
-         <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %>>
+         <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %> target="_blank">
             <%- `${endPoints[ep][1]}` %>
          </a>
       </li>
+      <% } %>
    <% }); %>
 </ul>
 <pre>
-<strong>STANDARD RESPONSE FORMAT : </strong>
+&nbsp;<strong>JSON RESPONSE SAMPLE FORMAT : </strong>
+<textarea cols="100" rows="14" disabled>
+
    {
       "info": {
          "result":true,                         // or false -- for error condition
@@ -23,10 +33,11 @@
          {"field":"data","field2":"data2"   etc... }
       ]
    }
+</textarea>
 </pre>
 <h3 style="color: red;"><i> - Special Routes : </i></h3>
 <ul>
-   <li><a href="./auth" title="/auth">Authentication</a></li>
+   <li><a href="./auth" title="/auth" target="_self">Authentication</a></li>
 </ul>
 <p> </p>
 <%- include("_footer.ejs") %>
