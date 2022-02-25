@@ -10,13 +10,22 @@ const __dirname = dirname(__filename);
 import "./src/utils/config.cjs";
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
 const APPDATA = {
-  PROJECT_NAME: packageJSON.name || "Node.js Project",
-  PROJECT_VERSION: "v" + packageJSON.version || "0.1",
-  DEV_NAME: process.env.NODE_APP_DEV_NAME || "Victor",
-  DEV_EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
-  DEV_PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
-  DEV_LOCATION: process.env.NODE_APP_DEV_LOCATION || "83707, Germany",
-  DEV_WEBSITE: packageJSON.homepage || process.env.HOST || "http://127.0.0.1",
+  TITLE: packageJSON.name || "Node.js Project",
+  NAME:
+    packageJSON.name
+      .replace(/-/g, " ")
+      .replace(/(^\w{1})|(\s+\w{1})/g, (chr) => chr.toUpperCase()) || "",
+  VER: "v" + packageJSON.version || "0.1",
+  INFO: packageJSON.info || "",
+  DESCR: packageJSON.description || "new project",
+  MODE: process.env.NODE_APP_DEV_MODE || "Dev.",
+  DEVTEAM: process.env.NODE_APP_DEV_TEAM || "",
+  DEVLEAD: process.env.NODE_APP_DEV_LEAD || "Victor Wright",
+  EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
+  PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
+  LOCATION: process.env.NODE_APP_DEV_ADDR || "83707, Germany",
+  WEBSITE: packageJSON.homepage || process.env.HOST || "http://127.0.0.1",
+  ROOT: __dirname || "/",
   HOST: process.env.HOST || packageJSON.homepage || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
 };
@@ -43,30 +52,33 @@ const endPoints = {
   route6: ["/api/plz-de", "API PostalCodes DE", plzRouter],
 };
 
+// ------------ ATTACH DATAVARIABLES TO ROUTES -----------
 baseRoute.appData = APPDATA;
 baseRoute.endPoints = endPoints;
 authRouter.appData = APPDATA;
 
 // ------------ MAIN APP -----------
 const app = express();
-const corsOptions = {
-  // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
-  origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers
-};
-app.use(cors(corsOptions));
 app.set("view engine", "ejs");
-app.use(express.static(join(__dirname, "uploads"))); //for serving something
 app.use(express.json());
+app.use(
+  cors({
+    // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers
+  })
+);
+app.use("/uploads", express.static(join(__dirname, "uploads"))); // for serving something (mutler?)
+app.use("/public", express.static(join(__dirname, "/public")));
 
-// ----------- terate all routers  ----
-app.use("/auth", authRouter);
+// ----------- iterate all routers  ----
 for (let index = 0; index < Object.keys(endPoints).length; index++) {
   var key = "route" + index;
   app.use(endPoints[key][0], endPoints[key][2]);
 }
+app.use("/auth", authRouter);
 
-// ----------- Handle unknown endpoint (a web-view)----
+// ----------- Handle unknown endpoint ----
 app.get("*", (req, res, next) => {
   res.status(404).render("no_route.ejs", { APPDATA });
 });
@@ -77,6 +89,6 @@ app.use(errorHandler);
 // ----------- Activate server!  ----
 app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.PROJECT_NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n`
+    `\n${APPDATA.NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n- Root is ${APPDATA.ROOT}\n`
   )
 );

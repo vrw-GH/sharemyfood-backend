@@ -1,0 +1,22 @@
+<hr/>
+<table style="width:100%; padding: 10px;">
+   <tr>
+      <td>
+<pre>
+   Developer: <%= `${APPDATA.DEVLEAD}` %>
+   Contact:   Email: <%= `${APPDATA.EMAIL}` %> 
+              Tel: <%= `${APPDATA.PHONE}` %> 
+   Location:  <%= `${APPDATA.LOCATION}` %> 
+</pre>
+      </td>
+      <td>
+<pre>
+   App deployed at : <a href=<%= `${APPDATA.WEBSITE}`%> target="_blank"><%= `${APPDATA.WEBSITE}` %></a>
+   Dev local Folder: <%= `${APPDATA.ROOT}` %>
+   Database        : PostgreSQL(current) or MySQL
+</pre>
+      </td>
+   </tr>
+</table>
+</body>
+</html>

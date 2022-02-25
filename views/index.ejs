@@ -1,31 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="theme-color" content="wheat" />
-   <!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" /> -->
-   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-   <link rel='stylesheet' href='%PUBLIC_URL%/stylesheets/style.css'/>
-   <title>API - <%= APPDATA.PROJECT_NAME %></title>
-</head>
-<body style="padding-left: 30px">
-   <h1>API for <%= APPDATA.PROJECT_NAME %></h1>
-   Release: <%= APPDATA.PROJECT_VERSION %>
-   <h4><strong>Currently served at: </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
-   <h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
-   <ul>
-      <% Object.keys(endPoints).forEach((ep)=>{ %>
-         <li>
-            <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %>>
-               <%- `${endPoints[ep][1]}` %>
-            </a>
-         </li>
-      <% }); %>
-   </ul>
-   <pre>
-   <strong>STANDARD RESPONSE FORMAT : </strong>
+<%- include("_header.ejs") %>
+<h2> - API -</h2>
+<br>
+<h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
+<ul>
+   <li>
+      <a href=<%= `${endPoints.route0[0]}`%> title=<%=`${endPoints.route0[0]}` %> target="_self">
+         <%- `${endPoints.route0[1]}` %>
+      </a>
+   </li>
+   <% Object.keys(endPoints).forEach((ep)=>{ %>
+      <% if (ep != "route0") { %>
+      <li>
+         <a href=<%= `${endPoints[ep][0]}`%> title=<%=`${endPoints[ep][0]}` %> target="_blank">
+            <%- `${endPoints[ep][1]}` %>
+         </a>
+      </li>
+      <% } %>
+   <% }); %>
+</ul>
+<pre>
+&nbsp;<strong>JSON RESPONSE SAMPLE FORMAT : </strong>
+<textarea cols="100" rows="14" disabled>
+
    {
       "info": {
          "result":true,                         // or false -- for error condition
@@ -37,21 +33,11 @@
          {"field":"data","field2":"data2"   etc... }
       ]
    }
-   </pre>
-   <h3 style="color: red;"><i> - Special Routes : </i></h3>
-      <ul>
-         <li><a href="./auth" title="/auth">Authentication</a></li>
-      </ul>
-   <p> </p>
-   <hr/>
-   <pre>
-   We are currently using the PostgreSQL database.
-   Deployed at: <a href=<%= `${APPDATA.DEV_WEBSITE}`%>><%= `${APPDATA.DEV_WEBSITE}` %></a>
-   ---------------
-   Developer: <%= `${APPDATA.DEV_NAME}` %>
-   Contact:   Email: <%= `${APPDATA.DEV_EMAIL}` %> 
-              Tel: <%= `${APPDATA.DEV_PHONE}` %> 
-   Location:  <%= `${APPDATA.DEV_LOCATION}` %> 
-   </pre>
-</body>
-</html>
+</textarea>
+</pre>
+<h3 style="color: red;"><i> - Special Routes : </i></h3>
+<ul>
+   <li><a href="./auth" title="/auth" target="_self">Authentication</a></li>
+</ul>
+<p> </p>
+<%- include("_footer.ejs") %>

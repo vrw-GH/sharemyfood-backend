@@ -1,9 +1,11 @@
 {
-  "name": "sharemyfood-backend",
+  "name": "share-my-food-backend",
+  "suffix": "final-project-wbs#020",
   "version": "2.0.0",
   "description": "BACKEND for Share My Food project",
+  "info": "This upgrade is required for version >1 of the frontend app (for authentication functionality).\nPlease set the backend-target in the frontend Dev/Deploy environment(s).",
   "main": "index.js",
-  "type": "module",  
+  "type": "module",
   "dependencies": {
     "axios": "^0.24.0",
     "cors": "^2.8.5",
@@ -36,6 +38,12 @@
   },
   "emmet.includeLanguages": {
     "ejs": "html"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
