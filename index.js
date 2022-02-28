@@ -33,16 +33,16 @@ const APPDATA = {
 // ------------ MODULES -----------
 import errorHandler from "./src/middlewares/errorHandler.js";
 // ------------ ROUTES -----------
-import authRouter from "./src/routes/router-auth.js";
-import baseRoute from "./src/routes/router-indexpage.js";
+import baseRoute from "./src/routes/router0-indexpage.js";
 import recipesRouter from "./src/routes/router1-recipes.js";
 import usersRouter from "./src/routes/router2-users.js";
 import categoriesRouter from "./src/routes/router3-categories.js";
 import ingredientsRouter from "./src/routes/router4-ingredients.js";
 import shareitemsRouter from "./src/routes/router5-shareitems.js";
 import plzRouter from "./src/routes/router6-plz.js";
+import authRouter from "./src/routes/router-auth.js";
 
-const endPoints = {
+const APIendPoints = {
   route0: ["/", "Info Page", baseRoute], //props issue!!
   route1: ["/api/recipes", "API Recipes", recipesRouter],
   route2: ["/api/users", "API Users", usersRouter],
@@ -54,33 +54,33 @@ const endPoints = {
 
 // ------------ ATTACH DATAVARIABLES TO ROUTES -----------
 baseRoute.appData = APPDATA;
-baseRoute.endPoints = endPoints;
+baseRoute.APIendPoints = APIendPoints;
 authRouter.appData = APPDATA;
 
 // ------------ MAIN APP -----------
 const app = express();
-app.set("view engine", "ejs");
+const origin = "*"; // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
+app.set("view engine", "ejs"); // looks in root/views folder
 app.use(express.json());
 app.use(
   cors({
-    // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
-    origin: "*",
+    origin,
     optionsSuccessStatus: 200, // some legacy browsers
   })
 );
-app.use("/uploads", express.static(join(__dirname, "uploads"))); // for serving something (mutler?)
+app.use("/uploads", express.static(join(__dirname, "/public/uploads"))); // for serving something (mutler?)
 app.use("/public", express.static(join(__dirname, "/public")));
 
 // ----------- iterate all routers  ----
-for (let index = 0; index < Object.keys(endPoints).length; index++) {
+for (let index = 0; index < Object.keys(APIendPoints).length; index++) {
   var key = "route" + index;
-  app.use(endPoints[key][0], endPoints[key][2]);
+  app.use(APIendPoints[key][0], APIendPoints[key][2]);
 }
 app.use("/auth", authRouter);
 
 // ----------- Handle unknown endpoint ----
 app.get("*", (req, res, next) => {
-  res.status(404).render("no_route.ejs", { APPDATA });
+  res.status(404).render("routeless.ejs", { APPDATA });
 });
 
 // ----------- Error handling  ----

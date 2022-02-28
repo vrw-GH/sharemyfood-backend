@@ -24,8 +24,8 @@ const fields = [
 const idField = fields[0][0];
 const keyField = fields[1][0];
 
-const usersRouter = Router();
-usersRouter
+const shareitemsRouter = Router(); //* "/api/shareitems"
+shareitemsRouter
   .route("/")
   .get(async (req, res) => {
     //                                       get all tuples
@@ -78,7 +78,7 @@ usersRouter
     res.status(403).json({ info, systemError: "" });
   });
 
-usersRouter
+shareitemsRouter
   .route("/:username")
   .get(async (req, res) => {
     //                                 get tuples for single username
@@ -106,7 +106,7 @@ usersRouter
     res.status(403).json({ info, systemError: "" });
   });
 
-usersRouter
+shareitemsRouter
   .route("/:username/:id")
   .get(async (req, res) => {
     //                                         get tuple for single id
@@ -170,4 +170,4 @@ usersRouter
     }
   });
 
-export default usersRouter;
+export default shareitemsRouter;

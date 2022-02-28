@@ -4,17 +4,16 @@ import { getAllEL, getOneEL } from "../controllers/dbData-plz.js";
 
 const dbTable = "plz_de";
 const fields = [
-  //field,creating,updatable
+  // <fieldname> , <when creating> , <can update>
   ["postal_code", true, false], //char(20)
   ["place_name", true, true], //char(180)
   ["longitude", false, true], //numeric
   ["latitude", false, true], //numeric
 ];
+// const idField = fields[0][0];
 const keyField = fields[0][0];
 
-// const validateElement = (element, toUpdate) => {  - function not required
-
-const plzRouter = Router();
+const plzRouter = Router(); //* "/api/plz-de"
 plzRouter
   .route("/")
   .get(async (req, res) => {

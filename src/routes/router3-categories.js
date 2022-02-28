@@ -29,7 +29,7 @@ const validateElement = (element) => {
   }
 };
 
-const categoriesRouter = Router();
+const categoriesRouter = Router(); //* "/api/categories"
 categoriesRouter
   .route("/")
   .get(async (req, res) => {

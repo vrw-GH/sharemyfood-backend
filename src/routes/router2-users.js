@@ -1,5 +1,4 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import {
   getAllEL,
   getOneEL,
@@ -8,12 +7,12 @@ import {
   deleteEL,
 } from "../controllers/dbData-users.js";
 import validateElements from "../utils/validations.js";
-import verifyJWT from "../middlewares/verifyJWT.js";
+import verifyJWT, { newJWT } from "../middlewares/JWT.js";
 import ErrorResponse from "../utils/errorResponse.js";
 
 const dbTable = "users";
 const fields = [
-  //fieldname, creating, updatable
+  // <fieldname> , <when creating> , <can update>
   ["username", true, false], // is keyfield
   ["email", true, true],
   ["password", true, true],
@@ -21,14 +20,15 @@ const fields = [
   ["plz", false, true], //char(10)
   ["location", false, true], //point(x,y)
 ];
+// const idField = fields[0][0];
 const keyField = fields[0][0];
 
-const usersRouter = Router();
+const usersRouter = Router(); //* "/api/users"
 usersRouter
   .route("/")
 
   .get(async (req, res) => {
-    //                                         get all tuples
+    //*                                        get all tuples
     try {
       const tuples = await getAllEL(dbTable, "username");
       const info = {
@@ -44,6 +44,8 @@ usersRouter
   })
 
   .post(
+    // *                                     signup (create tuple)
+    // ----- a middleware: check valid body-----------
     (req, res, next) => {
       const required = fields.filter((e) => e[1]);
       if (Object.keys(req.body).length < required.length)
@@ -53,8 +55,8 @@ usersRouter
         );
       next();
     },
+    // --------------------------------------------------
     async (req, res) => {
-      // *                              signup (create tuple)
       try {
         await getOneEL(dbTable, req.body[keyField]);
         const info = {
@@ -71,15 +73,8 @@ usersRouter
             message: `New data for <${req.body[keyField]}> added.`,
             records: tuples.length,
           };
-          const token = jwt.sign(
-            { username: req.body[keyField] },
-            process.env.NODE_APP_JWT,
-            {
-              expiresIn: 60 * 60,
-            }
-          );
-          // console.log(jwt.decode(token)); //* -testing only   ,{complete:true}
-          res.json({ info, token, tuples }); //! -remove tuples?
+          const token = newJWT({ username: req.body[keyField] });
+          res.json({ info, token, tuples }); //*      returns a token (signed-in)!
         } catch (error) {
           const info = {
             result: false,
@@ -105,8 +100,7 @@ usersRouter
   .route("/:id")
 
   .get(verifyJWT, async (req, res) => {
-    //*                                        login / get details
-    //                                         get single tuple
+    //*                                        get user if authorised (get tuple)
     try {
       const tuples = await getOneEL(dbTable, req.params.id);
       const info = {
@@ -114,14 +108,7 @@ usersRouter
         message: `${dbTable} info for <${req.params.id}>.`,
         records: tuples.length,
       };
-      const token = jwt.sign(
-        { username: req.params.id },
-        process.env.NODE_APP_JWT,
-        {
-          expiresIn: 60 * 60,
-        }
-      );
-      res.json({ info, token, tuples });
+      res.json({ info, tuples });
     } catch (error) {
       const info = {
         result: false,
@@ -132,11 +119,10 @@ usersRouter
   })
 
   .post(verifyJWT, async (req, res) => {
-    //                                         update single tuple
+    //*                                        update user if authorised (update tuple)
     try {
-      let tuples = await getOneEL(dbTable, req.params.id);
-      if (!tuples)
-        throw Error(`${dbTable} <${req.params.id}> (couldnt find data).`);
+      const tuples = await getOneEL(dbTable, req.params.id);
+      if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
       const newElement = validateElements(req.body, fields, true);
       tuples = await updateEL(dbTable, newElement, req.params.id);
       if (!tuples) throw Error(`Update failed.`);
@@ -159,7 +145,7 @@ usersRouter
     //TODO  Confirm... make sure!! - implement at front-end ?
     try {
       const tuples = await getOneEL(dbTable, req.params.id);
-      if (!tuples) throw Error(`Error in delete operation.`);
+      if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
       await deleteEL(dbTable, req.params.id);
       const info = {
         result: true,
@@ -169,7 +155,7 @@ usersRouter
     } catch (error) {
       const info = {
         result: false,
-        message: `${dbTable} <${req.params.id}> does not exist.`,
+        message: `${dbTable}: Error deleting <${req.params.id}>.`,
       };
       res.status(404).json({ info, systemError: error.message });
     }

@@ -11,6 +11,7 @@ import {
 
 const dbTable = "recipes";
 const fields = [
+  // <fieldname> , <when creating> , <can update>
   "title",
   "category",
   "ingredients",
@@ -38,7 +39,7 @@ const validateElement = (element) => {
   }
 };
 
-const recipesRouter = Router();
+const recipesRouter = Router(); //* "/api/recipes"
 recipesRouter
   .route("/")
   .get(async (req, res) => {
