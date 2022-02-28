@@ -3,17 +3,21 @@
    <tr>
       <td>
 <pre>
-   Developer  👨‍🦲: <strong><%= `${APPDATA.DEVLEAD}` %></strong>
-   Contact    📧: <%= `${APPDATA.EMAIL}` %> 
-              📞: <%= `${APPDATA.PHONE}` %> 
-   Location   📮: <%= `${APPDATA.LOCATION}` %> 
+   <i>Developer:</i>
+   👨‍🦲 <strong><%= `${APPDATA.DEVLEAD}` %></strong>
+   📧 <%= `${APPDATA.EMAIL}` %> 
+   📞 <%= `${APPDATA.PHONE}` %> 
+   📯 <%= `${APPDATA.LOCATION}` %> 
 </pre>
       </td>
       <td>
 <pre>
-   Deployed  🕸: <a href=<%= `${APPDATA.WEBSITE}`%> target="_blank"><%= `${APPDATA.WEBSITE}` %></a>
-   Local     📁: <%= `${APPDATA.ROOT}` %>
-   Database  📊: PostgreSQL(current) or MySQL
+   <i>Deployment:</i>
+   🕸  <a href=<%= `${APPDATA.WEBSITE}`%> target="_blank"><%= `${APPDATA.WEBSITE}` %></a>
+   📁 <%= `${APPDATA.ROOT}` %>
+   📊 PostgreSQL <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
+       MySQL <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
+                 
 </pre>
       </td>
    </tr>
