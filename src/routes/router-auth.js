@@ -1,21 +1,14 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import { getOneEL } from "../controllers/dbData-users.js";
-import verifyJWT from "../middlewares/verifyJWT.js";
+import verifyJWT, { newJWT } from "../middlewares/JWT.js";
 //TODO import ErrorResponse from "../utils/errorResponse.js"
 
-const doLogin = async (req, res) => {
-  //*                                        login
+const doSignIn = async (req, res) => {
+  //*                                        signIn
   const dbTable = "users";
   try {
     const tuples = await getOneEL(dbTable, req.params.id);
-    const token = jwt.sign(
-      { username: req.params.id },
-      process.env.NODE_APP_JWT,
-      {
-        expiresIn: 60 * 60,
-      }
-    );
+    const token = newJWT({ username: req.params.id });
     res.json({ token });
   } catch (error) {
     const info = {
@@ -26,30 +19,13 @@ const doLogin = async (req, res) => {
   }
 };
 
-const authRouter = Router();
-
-authRouter.post(
-  "/login/:id",
-  verifyJWT,
-  // (req, res, next) => {
-  //   if (!req.headers.authorization)
-  //     throw new ErrorResponse(`Please provide token`, 400);
-  //   const payload = jwt.verify(req.headers.authorization);
-  //   console.log(payload);
-  //   if (payload.username !== req.params.username)
-  //     throw new ErrorResponse(`Invalid Token`, 400);
-  //   next();
-  // },
-  doLogin
-);
-authRouter.get("/login", (req, res) => {
-  const APPDATA = authRouter.appData;
-  res.status(404).render("exp_post.ejs", { APPDATA });
-});
-// loginRouter.post("/signup", signUp);
-authRouter.use("/", (req, res) => {
-  const APPDATA = authRouter.appData;
-  res.status(501).render("auth.ejs", { APPDATA });
-});
+const authRouter = Router(); //* "/auth"
+authRouter
+  .post("/signin/:id", verifyJWT, doSignIn)
+  // .post("/signup", signUp); - - see api/users/login
+  .use("/", (req, res) => {
+    const APPDATA = authRouter.appData;
+    res.status(501).render("auth.ejs", { APPDATA });
+  });
 
 export default authRouter;

@@ -30,7 +30,7 @@ const validateElement = (element) => {
   }
 };
 
-const ingredientsRouter = Router();
+const ingredientsRouter = Router(); //* "/api/ingredients"
 ingredientsRouter
   .route("/")
   .get(async (req, res) => {
