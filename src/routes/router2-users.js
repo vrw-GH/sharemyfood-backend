@@ -1,164 +1,27 @@
 import { Router } from "express";
 import {
-  getAllEL,
-  getOneEL,
-  createEL,
-  updateEL,
-  deleteEL,
-} from "../controllers/dbData-users.js";
-import validateElements from "../utils/validations.js";
-import verifyJWT, { newJWT } from "../middlewares/JWT.js";
+  getUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser,
+  checkBody,
+} from "../middlewares/users.js";
+import verifyJWT from "../middlewares/JWT.js";
 import ErrorResponse from "../utils/errorResponse.js";
 
-const dbTable = "users";
-const fields = [
-  // <fieldname> , <when creating> , <can update>
-  ["username", true, false], // is keyfield
-  ["email", true, true],
-  ["password", true, true],
-  ["profilepic", false, true], //text
-  ["plz", false, true], //char(10)
-  ["location", false, true], //point(x,y)
-];
-// const idField = fields[0][0];
-const keyField = fields[0][0];
-
-const usersRouter = Router(); //* "/api/users"
+const usersRouter = Router(); //*              "/api/users"
 usersRouter
   .route("/")
-
-  .get(async (req, res) => {
-    //*                                        get all tuples
-    try {
-      const tuples = await getAllEL(dbTable, "username");
-      const info = {
-        result: true,
-        message: `All ${dbTable} list.`,
-        records: tuples.length,
-      };
-      res.json({ info, tuples });
-    } catch (error) {
-      const info = { result: false, message: `No data found.` };
-      res.status(404).json({ info, systemError: error.message });
-    }
-  })
-
-  .post(
-    // *                                     signup (create tuple)
-    // ----- a middleware: check valid body-----------
-    (req, res, next) => {
-      const required = fields.filter((e) => e[1]);
-      if (Object.keys(req.body).length < required.length)
-        throw new ErrorResponse(
-          `Please provide JSON data. {${required.map((e) => e[0])}}`,
-          400
-        );
-      next();
-    },
-    // --------------------------------------------------
-    async (req, res) => {
-      try {
-        await getOneEL(dbTable, req.body[keyField]);
-        const info = {
-          result: false,
-          message: `${keyField} <${req.body[keyField]}> already exists.`,
-        };
-        res.status(406).json({ info, systemError: null });
-      } catch (err) {
-        try {
-          const newElement = validateElements(req.body, fields, false); // generates error
-          const tuples = await createEL(dbTable, newElement);
-          const info = {
-            result: true,
-            message: `New data for <${req.body[keyField]}> added.`,
-            records: tuples.length,
-          };
-          const token = newJWT({ username: req.body[keyField] });
-          res.json({ info, token, tuples }); //*      returns a token (signed-in)!
-        } catch (error) {
-          const info = {
-            result: false,
-            message: `Error creating <${req.body[keyField]}>.`,
-          };
-          res.status(406).json({ info, systemError: error.message });
-        }
-      }
-    }
-  )
-
-  .delete((req, res) => {
-    const info = {
-      result: false,
-      message: `Delete all data not allowed.`,
-    };
-    res.status(403).json({ info, systemError: "" });
+  .get(getUsers) //*                           get all users (all tuples)
+  .post(checkBody, createUser) //*             create new user (new tuple)
+  .delete(() => {
+    throw new ErrorResponse("Delete all data not allowed.", 403);
   });
-
-// --------------------------------------------------------
-
 usersRouter
   .route("/:id")
-
-  .get(verifyJWT, async (req, res) => {
-    //*                                        get user if authorised (get tuple)
-    try {
-      const tuples = await getOneEL(dbTable, req.params.id);
-      const info = {
-        result: true,
-        message: `${dbTable} info for <${req.params.id}>.`,
-        records: tuples.length,
-      };
-      res.json({ info, tuples });
-    } catch (error) {
-      const info = {
-        result: false,
-        message: `${dbTable} <${req.params.id}> login error.`,
-      };
-      res.status(404).json({ info, systemError: error.message });
-    }
-  })
-
-  .post(verifyJWT, async (req, res) => {
-    //*                                        update user if authorised (update tuple)
-    try {
-      const tuples = await getOneEL(dbTable, req.params.id);
-      if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
-      const newElement = validateElements(req.body, fields, true);
-      tuples = await updateEL(dbTable, newElement, req.params.id);
-      if (!tuples) throw Error(`Update failed.`);
-      const info = {
-        result: true,
-        message: `${dbTable} info for <${req.params.id}> updated.`,
-        records: tuples.length,
-      };
-      res.json({ info, tuples });
-    } catch (error) {
-      const info = {
-        result: false,
-        message: `${dbTable} <${req.params.id}> error.`,
-      };
-      res.status(404).json({ info, systemError: error.message });
-    }
-  })
-
-  .delete(verifyJWT, async (req, res) => {
-    //TODO  Confirm... make sure!! - implement at front-end ?
-    try {
-      const tuples = await getOneEL(dbTable, req.params.id);
-      if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
-      await deleteEL(dbTable, req.params.id);
-      const info = {
-        result: true,
-        message: `${dbTable} <${req.params.id}> DELETED.`,
-      };
-      res.json({ info });
-    } catch (error) {
-      const info = {
-        result: false,
-        message: `${dbTable}: Error deleting <${req.params.id}>.`,
-      };
-      res.status(404).json({ info, systemError: error.message });
-    }
-  });
+  .get(verifyJWT, getUser) //*                 get user data if authorised (returns tuple)
+  .post(verifyJWT, updateUser) //*             update user if authorised (update tuple)
+  .delete(verifyJWT, deleteUser); //*          remove user if authorised (delete tuple)
 
 export default usersRouter;

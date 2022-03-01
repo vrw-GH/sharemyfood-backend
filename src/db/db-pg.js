@@ -8,7 +8,7 @@ const conn = new Pool({ connectionString }); // MUST === "connectionString" !!!
 
 conn.connect((err) => {
   !err
-    ? console.info(`### Connected to the POSTGRES server.`)
+    ? console.info(`- Connected to the POSTGRES server.\n`)
     : new ErrorResponse(err, 503);
 });
 

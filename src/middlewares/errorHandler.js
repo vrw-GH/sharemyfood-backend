@@ -1,8 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  console.log("\n### Error-handler: ---------------- ***");
-  console.log("    Origin-code: ", err.code);
-  console.log("    Origin-message: ", err.message);
-  console.log("    Status Code: ", err.statusCode);
   switch (err.message) {
     // simplified messages
     case "jwt malformed":
@@ -21,9 +17,15 @@ const errorHandler = (err, req, res, next) => {
       // err.message = No change;
       break;
   }
-  process.env.NODE_ENV != "production" &&
-    console.log("\n### Error-stack:  ---------------- ***\n   ", err.stack);
-  console.log("### ------------------------------ /\n");
+  if (errorHandler.MODE.substring(0, 3).toUpperCase() === "DEV") {
+    console.log("\n### Error-handler: ---------------- ***");
+    console.log("    Origin-code: ", err.code);
+    console.log("    Origin-message: ", err.message);
+    console.log("    Status Code: ", err.statusCode);
+    process.env.NODE_ENV != "production" &&
+      console.log("\n### Error-stack:  ---------------- ***\n   ", err.stack);
+    console.log("### ------------------------------ /\n");
+  }
   res.status(err.statusCode || 500).json({ error: err.message });
 };
 

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { getOneEL } from "../controllers/dbData-users.js";
 import verifyJWT, { newJWT } from "../middlewares/JWT.js";
-//TODO import ErrorResponse from "../utils/errorResponse.js"
+import ErrorResponse from "../utils/errorResponse.js";
 
-const doSignIn = async (req, res) => {
-  //*                                        signIn
+const doLogIn = async (req, res) => {};
+
+const doCheckIn = async (req, res) => {
   const dbTable = "users";
   try {
     const tuples = await getOneEL(dbTable, req.params.id);
@@ -21,8 +22,8 @@ const doSignIn = async (req, res) => {
 
 const authRouter = Router(); //* "/auth"
 authRouter
-  .post("/signin/:id", verifyJWT, doSignIn)
-  // .post("/signup", signUp); - - see api/users/login
+  .post("/login/:id", doLogIn) //*                           log-in
+  .post("/checkin/:id", verifyJWT, doCheckIn) //*            check-in
   .use("/", (req, res) => {
     const APPDATA = authRouter.appData;
     res.status(501).render("auth.ejs", { APPDATA });
