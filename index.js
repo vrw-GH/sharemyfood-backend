@@ -84,11 +84,12 @@ app.get("*", (req, res, next) => {
 });
 
 // ----------- Error handling  ----
+errorHandler.MODE = APPDATA.MODE;
 app.use(errorHandler);
 
 // ----------- Activate server!  ----
 app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n- Root is ${APPDATA.ROOT}\n`
+    `\n${APPDATA.NAME}: \n- Server listens at ${APPDATA.HOST}:${APPDATA.PORT}\n- Root is ${APPDATA.ROOT}\n- Mode ${APPDATA.MODE}/${process.env.NODE_ENV}`
   )
 );
