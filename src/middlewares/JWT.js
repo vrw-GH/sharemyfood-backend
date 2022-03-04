@@ -2,9 +2,12 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "./asyncHandler.js";
 import ErrorResponse from "../utils/errorResponse.js";
 
+const hms = process.env.NODE_APP_COOKTIME.match(/\D/)[0];
+let COOKTIME = parseInt(process.env.NODE_APP_COOKTIME);
+COOKTIME = COOKTIME * (hms === "h" ? 60 * 60 : hms !== "s" ? 60 : 1);
+const JWToptions = { expiresIn: COOKTIME };
 const JWTsecret = process.env.NODE_APP_JWT;
-const JWToptions = { expiresIn: 60 * 60 };
-const MODE = process.env.NODE_APP_DEV_MODE;
+const MODE = process.env.NODE_APP_MODE;
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
   const {

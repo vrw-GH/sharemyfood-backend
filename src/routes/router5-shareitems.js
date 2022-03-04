@@ -39,7 +39,7 @@ shareitemsRouter
       res.json({ info, tuples });
     } catch (error) {
       const info = { result: false, message: `No data found.` };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -50,7 +50,7 @@ shareitemsRouter
     //     result: false,
     //     message: `${keyField} <${req.body[keyField]}> already exists.`,
     //   };
-    //   res.status(406).json({ info, systemError: null });
+    //   res.status(406).json({ info, sysMessage: null });
     // } catch (err) {
     try {
       const newElement = validateElement(req.body, fields, false); // generates error if invalid
@@ -66,7 +66,7 @@ shareitemsRouter
         result: false,
         message: `Error creating <${req.body[keyField]}>.`,
       };
-      res.status(406).json({ info, systemError: error.message });
+      res.status(406).json({ info, sysMessage: error.message });
     }
     // }
   })
@@ -75,7 +75,7 @@ shareitemsRouter
       result: false,
       message: `Delete all data not allowed.`,
     };
-    res.status(403).json({ info, systemError: "" });
+    res.status(403).json({ info, sysMessage: "" });
   });
 
 shareitemsRouter
@@ -95,7 +95,7 @@ shareitemsRouter
         result: false,
         message: `${dbTable} <${req.params.username}> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .delete((req, res) => {
@@ -103,7 +103,7 @@ shareitemsRouter
       result: false,
       message: `Delete all <${req.params.username}> not allowed.`,
     };
-    res.status(403).json({ info, systemError: "" });
+    res.status(403).json({ info, sysMessage: "" });
   });
 
 shareitemsRouter
@@ -124,7 +124,7 @@ shareitemsRouter
         result: false,
         message: `${dbTable} <${req.params.id}> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -147,7 +147,7 @@ shareitemsRouter
         result: false,
         message: `${dbTable} <${req.params.id}> error.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .delete(async (req, res) => {
@@ -166,7 +166,7 @@ shareitemsRouter
         result: false,
         message: `${dbTable} <${req.params.username}(${req.params.id})> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   });
 

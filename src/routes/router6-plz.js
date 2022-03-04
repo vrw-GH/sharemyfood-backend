@@ -31,16 +31,16 @@ plzRouter
       res.json({ info, tuples });
     } catch (error) {
       const info = { result: false, message: `No data found.` };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
     res
       .status(403)
-      .json({ info, systemError: "Cannot Post New/delete to this API." });
+      .json({ info, sysMessage: "Cannot Post New/delete to this API." });
   })
   .delete(async (req, res) => {
-    res.status(403).json({ info, systemError: "Cannot Delete at this API." });
+    res.status(403).json({ info, sysMessage: "Cannot Delete at this API." });
   });
 
 plzRouter
@@ -60,14 +60,14 @@ plzRouter
         result: false,
         message: `${dbTable} <${req.params.id}> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
-    res.status(403).json({ info, systemError: "Cannot Update to this API." });
+    res.status(403).json({ info, sysMessage: "Cannot Update to this API." });
   })
   .delete(async (req, res) => {
-    res.status(403).json({ info, systemError: "Cannot Delete at this API." });
+    res.status(403).json({ info, sysMessage: "Cannot Delete at this API." });
   });
 
 export default plzRouter;
