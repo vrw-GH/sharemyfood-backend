@@ -60,7 +60,7 @@ recipesRouter
         result: false,
         message: `No data found.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -71,7 +71,7 @@ recipesRouter
         result: false,
         message: `<${req.body[keyField]}> slug already exists.`,
       };
-      res.status(406).json({ info, systemError: null });
+      res.status(406).json({ info, sysMessage: null });
     } catch (err) {
       try {
         const newElement = validateElement(req.body); // generates error if invalid
@@ -89,7 +89,7 @@ recipesRouter
           result: false,
           message: `Error creating <${req.body[keyField]}>.`,
         };
-        res.status(406).json({ info, systemError: error.message });
+        res.status(406).json({ info, sysMessage: error.message });
       }
     }
   })
@@ -98,7 +98,7 @@ recipesRouter
       result: false,
       message: `Delete all data not allowed.`,
     };
-    res.status(403).json({ info, systemError: "" });
+    res.status(403).json({ info, sysMessage: "" });
   });
 
 recipesRouter
@@ -119,7 +119,7 @@ recipesRouter
         result: false,
         message: `${dbTable} <${req.params.id}> (no slug found).`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -143,7 +143,7 @@ recipesRouter
         result: false,
         message: `${dbTable} <${req.params.id}>.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .delete(async (req, res) => {
@@ -163,7 +163,7 @@ recipesRouter
         result: false,
         message: `${dbTable} <${req.params.id}> (slug does not exist).`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   });
 

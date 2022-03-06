@@ -7,7 +7,7 @@ const conn = mysql.createConnection(connectionString);
 
 conn.connect((err) => {
   !err
-    ? console.info("- Connected to the MySQL server.\n")
+    ? console.info(`- DB:     MySQL server.\n`)
     : new ErrorResponse(err, 503);
 });
 

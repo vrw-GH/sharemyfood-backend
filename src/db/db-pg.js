@@ -7,9 +7,7 @@ const { Pool } = pg;
 const conn = new Pool({ connectionString }); // MUST === "connectionString" !!!
 
 conn.connect((err) => {
-  !err
-    ? console.info(`- Connected to the POSTGRES server.\n`)
-    : new ErrorResponse(err, 503);
+  !err ? console.info(`- DB: POSTGRES server.\n`) : new ErrorResponse(err, 503);
 });
 
 export const queryDB = (sqlString, values) => {

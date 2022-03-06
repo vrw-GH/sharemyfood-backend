@@ -48,7 +48,7 @@ ingredientsRouter
       res.json({ info, tuples });
     } catch (error) {
       const info = { result: false, message: `No data found.` };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -59,7 +59,7 @@ ingredientsRouter
         result: false,
         message: `${keyField} <${req.body[keyField]}> already exists.`,
       };
-      res.status(406).json({ info, systemError: null });
+      res.status(406).json({ info, sysMessage: null });
     } catch (err) {
       try {
         const newElement = validateElement(req.body); // generates error if invalid
@@ -75,7 +75,7 @@ ingredientsRouter
           result: false,
           message: `Error creating <${req.body[keyField]}>.`,
         };
-        res.status(406).json({ info, systemError: error.message });
+        res.status(406).json({ info, sysMessage: error.message });
       }
     }
   })
@@ -84,7 +84,7 @@ ingredientsRouter
       result: false,
       message: `Delete all data not allowed.`,
     };
-    res.status(403).json({ info, systemError: "" });
+    res.status(403).json({ info, sysMessage: "" });
   });
 
 ingredientsRouter
@@ -104,7 +104,7 @@ ingredientsRouter
         result: false,
         message: `${dbTable} <${req.params.id}> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .post(async (req, res) => {
@@ -127,7 +127,7 @@ ingredientsRouter
         result: false,
         message: `${dbTable} <${req.params.id}> not existing.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   })
   .delete(async (req, res) => {
@@ -146,7 +146,7 @@ ingredientsRouter
         result: false,
         message: `${dbTable} <${req.params.id}> does not exist.`,
       };
-      res.status(404).json({ info, systemError: error.message });
+      res.status(404).json({ info, sysMessage: error.message });
     }
   });
 

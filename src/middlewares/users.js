@@ -22,6 +22,10 @@ const fields = [
 // const idField = fields[0][0];
 const keyField = fields[0][0];
 
+const hms = process.env.NODE_APP_COOKTIME.match(/\D/)[0];
+let COOKTIME = parseInt(process.env.NODE_APP_COOKTIME);
+COOKTIME = COOKTIME * (hms === "h" ? 60 * 60 : hms !== "s" ? 60 : 1) * 1000;
+
 export const getUsers = async (req, res) => {
   try {
     const tuples = await getAllEL(dbTable, "username");
@@ -33,7 +37,7 @@ export const getUsers = async (req, res) => {
     res.json({ info, tuples });
   } catch (error) {
     const info = { result: false, message: `No data found.` };
-    res.status(404).json({ info, systemError: error.message });
+    res.status(404).json({ info, sysMessage: error.message });
   }
 };
 
@@ -44,7 +48,7 @@ export const createUser = async (req, res) => {
       result: false,
       message: `${keyField} <${req.body[keyField]}> already exists.`,
     };
-    res.status(406).json({ info, systemError: null });
+    res.status(406).json({ info, sysMessage: null });
   } catch (err) {
     try {
       const newElement = await validateElements(req.body, fields, false); // generates error
@@ -55,13 +59,18 @@ export const createUser = async (req, res) => {
         message: `New data for <${req.body[keyField]}> added.`,
         records: tuples.length,
       };
-      res.json({ info, token, tuples }); //*                returns a token (signed-in)!
+      res.cookie("sharemyfood", JSON.stringify(token), {
+        secure: process.env.NODE_ENV !== "development",
+        httpOnly: true,
+        maxAge: COOKTIME,
+      });
+      res.json({ info, token, tuples }); //! remove token when cookies are working
     } catch (error) {
       const info = {
         result: false,
         message: `Error creating <${req.body[keyField]}>.`,
       };
-      res.status(406).json({ info, systemError: error.message });
+      res.status(406).json({ info, sysMessage: error.message });
     }
   }
 };
@@ -74,19 +83,25 @@ export const getUser = async (req, res) => {
       message: `${dbTable} info for <${req.params.id}>.`,
       records: tuples.length,
     };
-    res.json({ info, tuples });
+    const token = await newJWT({ username: req.params.id });
+    res.cookie("sharemyfood", JSON.stringify(token), {
+      secure: process.env.NODE_ENV !== "development",
+      httpOnly: true,
+      maxAge: COOKTIME,
+    });
+    res.json({ info, token, tuples }); //! remove token when cookies are working
   } catch (error) {
     const info = {
       result: false,
       message: `${dbTable} <${req.params.id}> login error.`,
     };
-    res.status(404).json({ info, systemError: error.message });
+    res.status(404).json({ info, sysMessage: error.message });
   }
 };
 
 export const updateUser = async (req, res) => {
   try {
-    const tuples = await getOneEL(dbTable, req.params.id);
+    let tuples = await getOneEL(dbTable, req.params.id);
     if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
     const newElement = validateElements(req.body, fields, true);
     tuples = await updateEL(dbTable, newElement, req.params.id);
@@ -102,7 +117,7 @@ export const updateUser = async (req, res) => {
       result: false,
       message: `${dbTable} <${req.params.id}> error.`,
     };
-    res.status(404).json({ info, systemError: error.message });
+    res.status(404).json({ info, sysMessage: error.message });
   }
 };
 
@@ -122,7 +137,7 @@ export const deleteUser = async (req, res) => {
       result: false,
       message: `${dbTable}: Error deleting <${req.params.id}>.`,
     };
-    res.status(404).json({ info, systemError: error.message });
+    res.status(404).json({ info, sysMessage: error.message });
   }
 };
 
