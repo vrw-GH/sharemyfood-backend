@@ -101,7 +101,7 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const tuples = await getOneEL(dbTable, req.params.id);
+    let tuples = await getOneEL(dbTable, req.params.id);
     if (!tuples) throw Error(`Couldnt find <${req.params.id}>.`);
     const newElement = validateElements(req.body, fields, true);
     tuples = await updateEL(dbTable, newElement, req.params.id);
