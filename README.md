@@ -1,7 +1,5 @@
 ## BACKEND for Share My Food project
 
-<a href="https://github.com/vrw-GH/sharemyfood-backend/tree/main-v2" target="_blank">GitHub Repo here</a>
-
 <h3>Database/s:</h3> 
   &emsp;Live (online) - ElephantSQL  <br>
   &emsp;Production (local) - PostgreSQL, MySQL
