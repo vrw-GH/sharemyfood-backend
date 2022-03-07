@@ -29,7 +29,7 @@
   <br>
 <h3>- Frontend:</h3>
   &emsp;(Beta) <a href="https://sharemyfood-prerelease.vercel.app" target="_blank">sharemyfood-prerelease.vercel.app</a><br>
-  &emsp;(Stable) <a href="https://sharemyfood-prerelease.vercel.app" target="_blank">sharemyfood.vercel.app</a><br>
+  &emsp;(Stable) <a href="https://sharemyfood.vercel.app" target="_blank">sharemyfood.vercel.app</a><br>
 <br>
 
 ## Project Team:
