@@ -3,13 +3,11 @@
 <h3>Database/s:</h3> 
   &emsp;Live (online) - ElephantSQL  <br>
   &emsp;Production (local) - PostgreSQL, MySQL
-
 <br>
 
-## <i>Continuous Deployment:</i>
+## <i>Heroku Deployment:</i>
 
 <h4><u>V0</u></h4>
-
 <h3>- Backend:</h3>
   &emsp; <a href="https://sharemyfood-backend.herokuapp.com" target="_blank">https://sharemyfood-backend.herokuapp.com</a>
   <br>
