@@ -30,7 +30,8 @@
   &emsp;&emsp;&emsp;- <i>therefore it depends if connection is alive.</i>
   <br>
 <h3>- Frontend:</h3>
-  &emsp;(Beta) <a href="https://" target="_blank">https://</a><br>
+  &emsp;(Beta) <a href="https://sharemyfood-prerelease.vercel.app" target="_blank">sharemyfood-prerelease.vercel.app</a><br>
+  &emsp;(Stable) <a href="https://sharemyfood-prerelease.vercel.app" target="_blank">sharemyfood.vercel.app</a><br>
 <br>
 
 ## Project Team:
