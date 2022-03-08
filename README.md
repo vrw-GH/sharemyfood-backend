@@ -7,16 +7,6 @@
 
 ## <i>Heroku Deployment:</i>
 
-<h4><u>V0</u></h4>
-<h3>- Backend:</h3>
-  &emsp; <a href="https://sharemyfood-backend.herokuapp.com" target="_blank">https://sharemyfood-backend.herokuapp.com</a>
-  <br>
-<h3>- Frontend:</h3>
-  &emsp;(Stable) <a href="https://final-project-wd020.vercel.app" target="_blank">https://final-project-wd020.vercel.app</a>
-  <br>
-  &emsp;(Beta) <a href="https://vrwgh-finalprojectwd020.netlify.app" target="_blank">https://vrwgh-finalprojectwd020.netlify.app</a>
-  <br>
-<br>
 <h4><u>V2</u></h4>
 <h3>- Backend:</h3>
 &emsp;<a href="https://sharemyfood-backend-v2.herokuapp.com" target="_blank">https://sharemyfood-backend-v2.herokuapp.com</a>
@@ -30,6 +20,17 @@
 <h3>- Frontend:</h3>
   &emsp;(Beta) <a href="https://sharemyfood-prerelease.vercel.app" target="_blank">sharemyfood-prerelease.vercel.app</a><br>
   &emsp;(Stable) <a href="https://sharemyfood.vercel.app" target="_blank">sharemyfood.vercel.app</a><br>
+<br>
+
+<h4><u>V0</u></h4>
+<h3>- Backend:</h3>
+  &emsp; <a href="https://sharemyfood-backend.herokuapp.com" target="_blank">https://sharemyfood-backend.herokuapp.com</a>
+  <br>
+<h3>- Frontend:</h3>
+  &emsp;(Stable) <a href="https://final-project-wd020.vercel.app" target="_blank">https://final-project-wd020.vercel.app</a>
+  <br>
+  &emsp;(Beta) <a href="https://vrwgh-finalprojectwd020.netlify.app" target="_blank">https://vrwgh-finalprojectwd020.netlify.app</a>
+  <br>
 <br>
 
 ## Project Team:
