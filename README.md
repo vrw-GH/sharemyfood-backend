@@ -1,11 +1,15 @@
 ## BACKEND for Share My Food project
 
 <a href="https://github.com/vrw-GH/sharemyfood-backend/tree/main-v2" target="_blank">GitHub Repo here</a>
+![](./public/Screenshot.png?raw=true)
 
 <h3>Database/s:</h3> 
   &emsp;Live (online) - ElephantSQL  <br>
   &emsp;Production (local) - PostgreSQL, MySQL
 <br>
+
+![](./proj-docs/sharemyfood-v2.pgerd.png)
+
 
 ## <i>Heroku Deployment:</i>
 
