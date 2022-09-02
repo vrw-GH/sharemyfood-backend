@@ -1,0 +1,4 @@
+{
+   "appService.defaultWebAppToDeploy": "/subscriptions/e7689fdc-653c-4bb7-a9e4-c4d625a6294a/microsoft.web/sites/subscriptions/e7689fdc-653c-4bb7-a9e4-c4d625a6294a/resourceGroups/sharemyfood-backend-rg/providers/Microsoft.Web/sites/sharemyfood-backend",
+   "appService.deploySubpath": "."
+}
