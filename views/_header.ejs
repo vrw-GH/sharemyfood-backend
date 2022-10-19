@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="theme-color" content="#000000" />
-   <link rel="manifest" href="/public/manifest.json" />
-   <link rel="shortcut icon" href="/public/favicon.ico" />
-   <link rel="stylesheet" href="/public/stylesheets/style.css"/>
-   <title><%= APPDATA.NAME %></title>
-</head>
-<body style="padding-left: 30px">
-<h1> <img src="/public/favicon.ico" alt=""> <%= APPDATA.NAME %></h1>
-<table style="width:100%; border-spacing: 10px;">
-   <tr>
-      <td>
-<pre>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/public/manifest.json" />
+    <link rel="shortcut icon" href="/public/favicon.ico" />
+    <link rel="stylesheet" href="/public/stylesheets/style.css" />
+    <title><%= APPDATA.NAME %></title>
+  </head>
+  <body style="padding-left: 30px">
+    <h1><img src="/public/favicon.ico" alt="" /> <%= APPDATA.NAME %></h1>
+    <table style="width: 100%; border-spacing: 10px">
+      <tr>
+        <td>
+          <pre>
 <strong>Release: <%= APPDATA.VER %> <i>(<%= APPDATA.MODE %>)</i></strong>
 Description : <%= APPDATA.DESCR %>
 </pre>
-      </td>
-      <td style="vertical-align: center">
-<pre>
+        </td>
+        <td style="vertical-align: center">
+          <pre>
 <h5><i><%= `${APPDATA.INFO}` %></i></h5>
 </pre>
-      </td>
-   </tr>
-</table>
-<h4><strong>Now served via: &emsp; </strong> <%= `${APPDATA.HOST}:${APPDATA.PORT}` %> </h4>
-<hr><br>
+        </td>
+      </tr>
+    </table>
+    <h4 id="href"></h4>
+    <script>
+      document.getElementById("href").innerHTML =
+        "Now served via: &emsp; " + window.location.href;
+    </script>
+    <hr />
+    <br />
+  </body>
+</html>
