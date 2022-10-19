@@ -25,9 +25,9 @@ const APPDATA = {
   LOCATION: process.env.NODE_APP_DEV_ADDR || "83707, Germany",
   MODE: process.env.NODE_APP_MODE || "Dev.",
   COOKTIME: process.env.NODE_APP_COOKTIME || "60m",
-  WEBSITE: packageJSON.homepage || process.env.HOST || "http://127.0.0.1",
+  WEBSITE: process.env.HOST || packageJSON.homepage || "http://127.0.0.1",
   ROOT: __dirname || "/",
-  HOST: process.env.HOST || packageJSON.homepage || "http://127.0.0.1",
+  HOST: process.env.HOST || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
 };
 
@@ -60,9 +60,9 @@ authRouter.appData = APPDATA;
 
 // ------------ MAIN APP -----------
 const app = express();
-const origin = "*"; // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
 app.set("view engine", "ejs"); // looks in root/views folder
 app.use(express.json());
+const origin = "*"; // {origin: [host, "http://127.0.0.1", "https://abul.db.elephantsql.com/"],}
 app.use(
   cors({
     origin,
@@ -91,6 +91,6 @@ app.use(errorHandler);
 // ----------- Activate server!  ----
 app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.NAME}: \n- Server: ${APPDATA.HOST}:${APPDATA.PORT}\n- Root: ${APPDATA.ROOT}\n- Mode: ${APPDATA.MODE}/${process.env.NODE_ENV}`
+    `\n${APPDATA.NAME}: \n- Website: ${APPDATA.WEBSITE} \n- Server: ${APPDATA.HOST}:${APPDATA.PORT}\n- Root: ${APPDATA.ROOT}\n- Mode: ${APPDATA.MODE}/${process.env.NODE_ENV}`
   )
 );

@@ -28,7 +28,12 @@
     "node": "v17.0.1",
     "//node": "v16.13.0"
   },
-  "keywords": ["sharemyfood", "backend", "heroku" ],
+  "keywords": [
+    "sharemyfood",
+    "backend",
+    "PostgreSQL",
+    "mySQL"
+  ],
   "author": "VRW",
   "license": "ISC",
   "devDependencies": {
@@ -57,5 +62,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://sharemyfood-backend-v2.herokuapp.com"
+  "homepage": ".",
+  "//homepage": "https://sharemyfood-backend-v2.herokuapp.com"
 }
