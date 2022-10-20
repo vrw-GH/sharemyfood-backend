@@ -16,11 +16,11 @@
    📁 <%= `${APPDATA.ROOT}` %>
    📊 PostgreSQL Server: <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
        MySQL Server: <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
-   🕸  Online: <a href=<%= `${APPDATA.WEBSITE}:${APPDATA.PORT}`%>
+   🕸  Online: <a href=<%= `${APPDATA.WEBSITE}`%>
          target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a>
 </pre>
          <script>
-            document.getElementById("siteroot").innerHTML = window.location.host;
+            document.getElementById("siteroot").innerHTML = window.location.hostname+":"+window.location.port;
          </script>
       </td>
    </tr>
