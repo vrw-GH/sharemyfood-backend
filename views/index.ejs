@@ -1,22 +1,24 @@
 <%- include("_header.ejs") %>
-<h2> - API -</h2>
-<br>
-<h3 style="color: red;"><i> - All general API routes are as follows: </i></h3>
+<h2>- API -</h2>
+<br />
+<h3 style="color: red"><i> ♦ General API routes: </i></h3>
 <ul>
-   <li>
-      <a href=<%= `${APIendPoints.route0[0]}`%> title=<%=`${APIendPoints.route0[0]}` %> target="_self">
-         <%- `${APIendPoints.route0[1]}` %>
-      </a>
-   </li>
-   <% Object.keys(APIendPoints).forEach((ep)=>{ %>
-      <% if (ep != "route0") { %>
-      <li>
-         <a href=<%= `${APIendPoints[ep][0]}`%> title=<%=`${APIendPoints[ep][0]}` %> target="_blank">
-            <%- `${APIendPoints[ep][1]}` %>
-         </a>
-      </li>
-      <% } %>
-   <% }); %>
+  <li>
+    <a href=<%= `${APIendPoints.route0[0]}` %>
+      title=<%= `${APIendPoints.route0[0]}` %>
+      target="_self">
+      <%- `${APIendPoints.route0[1]}` %>
+    </a>
+  </li>
+  <% Object.keys(APIendPoints).forEach((ep)=>{ %> <% if (ep != "route0") { %>
+  <li>
+    <a href=<%= `${APIendPoints[ep][0]}` %>
+      title=<%=`${APIendPoints[ep][0]}` %>
+      target="_blank">
+      <%- `${APIendPoints[ep][1]}` %>
+    </a>
+  </li>
+  <% } %> <% }); %>
 </ul>
 <pre>
 &nbsp;<strong>JSON RESPONSE SAMPLE FORMAT : </strong>
@@ -35,9 +37,9 @@
    }
 </textarea>
 </pre>
-<h3 style="color: red;"><i> - Special Routes : </i></h3>
+<h3 style="color: red"><i> ♦ Special Routes : </i></h3>
 <ul>
-   <li><a href="./auth" title="/auth" target="_self">Authentication</a></li>
+  <li><a href="./auth" title="/auth" target="_self">Authentication</a></li>
 </ul>
-<p> </p>
+<p></p>
 <%- include("_footer.ejs") %>
