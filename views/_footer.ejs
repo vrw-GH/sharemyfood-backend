@@ -12,7 +12,7 @@
       </td>
       <td>
 <pre>
-   <u><i>Deployment: </i><strong><span id="siteroot">show_site_root_here</span></strong></u>
+   <u><i>Deployment: </i><strong><span id="siteroot">show_site_root_here</span></strong></u>   
    📁 <%= `${APPDATA.ROOT}` %>
    📊 PostgreSQL Server: <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
        MySQL Server: <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
@@ -20,7 +20,7 @@
          target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a>
 </pre>
          <script>
-            document.getElementById("siteroot").innerHTML = window.location.hostname+":"+window.location.port;
+            document.getElementById("siteroot").innerHTML = window.location.hostname + ":" + (window.location.port ? window.location.port : APPDATA.PORT);            
          </script>
       </td>
    </tr>
