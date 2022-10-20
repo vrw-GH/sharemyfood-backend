@@ -25,7 +25,7 @@ const APPDATA = {
   LOCATION: process.env.NODE_APP_DEV_ADDR || "83707, Germany",
   MODE: process.env.NODE_APP_MODE || "Dev.",
   COOKTIME: process.env.NODE_APP_COOKTIME || "60m",
-  WEBSITE: process.env.WEBSITE || packageJSON.homepage || "http://127.0.0.1",
+  WEBSITE: process.env.NODE_APP_WEBSITE || packageJSON.homepage || "http://127.0.0.1",
   ROOT: __dirname || "/",
   HOST: process.env.HOST || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
