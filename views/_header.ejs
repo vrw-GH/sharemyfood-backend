@@ -18,19 +18,20 @@
           <pre>
 <strong>Release: <%= APPDATA.VER %> <i>(<%= APPDATA.MODE %>)</i></strong>
 Description : <%= APPDATA.DESCR %>
-</pre>
+          </pre>
         </td>
         <td style="vertical-align: center">
           <pre>
 <h5><i><%= `${APPDATA.INFO}` %></i></h5>
-</pre>
+          </pre>
         </td>
       </tr>
     </table>
     <h4 id="href"></h4>
     <script>
       document.getElementById("href").innerHTML =
-        "Now served via: &emsp; " + window.location.href;
+        "Current URL: &emsp; " +
+        window.location.href;
     </script>
     <hr />
     <br />

@@ -3,22 +3,25 @@
    <tr>
       <td>
 <pre>
-   <i>Developer:</i>
-   👨‍🦲 <strong><%= `${APPDATA.DEVLEAD}` %></strong>
+   <u><i>Developer: </i><span><strong><%= `${APPDATA.DEVLEAD}` %></strong></span></u>
    📧 <%= `${APPDATA.EMAIL}` %> 
    📞 <%= `${APPDATA.PHONE}` %> 
-   📯 <%= `${APPDATA.LOCATION}` %> 
+   <%= APPDATA.LOCATION ? `📯 ${APPDATA.LOCATION}` : null %>
+   <%= APPDATA.DEVTEAM ? `🎲 ${APPDATA.DEVTEAM}` : null %>
 </pre>
       </td>
       <td>
 <pre>
-   <i>Deployment:</i>
-   🕸  <a href=<%= `${APPDATA.WEBSITE}`%> target="_blank"><%= `${APPDATA.WEBSITE}` %></a>
+   <u><i>Deployment: </i><strong><span id="siteroot">show_site_root_here</span></strong></u>
    📁 <%= `${APPDATA.ROOT}` %>
    📊 PostgreSQL Server: <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
        MySQL Server: <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
-                 
+   🕸  Online: <a href=<%= `${APPDATA.WEBSITE}:${APPDATA.PORT}`%>
+         target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a>
 </pre>
+         <script>
+            document.getElementById("siteroot").innerHTML = window.location.host;
+         </script>
       </td>
    </tr>
 </table>
