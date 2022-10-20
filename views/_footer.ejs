@@ -20,7 +20,7 @@
          target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a>
 </pre>
          <script>
-            document.getElementById("siteroot").innerHTML = window.location.hostname + ":" + (window.location.port ? window.location.port : APPDATA.PORT);            
+            document.getElementById("siteroot").innerHTML = window.location.hostname + ":" + (window.location.port ? window.location.port : "<%= `${APPDATA.PORT}`%>");
          </script>
       </td>
    </tr>
