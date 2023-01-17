@@ -2,28 +2,26 @@
 <table style="width:100%; padding: 10px;">
    <tr>
       <td>
-<pre>
-   <u><i>Developer: </i><span><strong><%= `${APPDATA.DEVLEAD}` %></strong></span></u>
-   📧 <%= `${APPDATA.EMAIL}` %> 
-   📞 <%= `${APPDATA.PHONE}` %> 
-   <%= APPDATA.LOCATION ? `📯 ${APPDATA.LOCATION}` : null %>
-   <%= APPDATA.DEVTEAM ? `🎲 ${APPDATA.DEVTEAM}` : null %>
-</pre>
+<pre>   <u><i>Developer</i></u>:
+   <strong><a href=<%= `${APPDATA.LEADWEB}` %> target="_blank" rel="noreferrer" title="Visit Profile"><%= `${APPDATA.DEVLEAD}` %></a></strong>
+     📧 <a href=<%= `mailto:${APPDATA.EMAIL}` %>><%= `${APPDATA.EMAIL}` %></a>
+     📞 <%= `${APPDATA.PHONE}` %> 
+     <%= APPDATA.LOCATION ? `📯 ${APPDATA.LOCATION}` : null %>
+     <%= APPDATA.DEVTEAM ? `🎲 ${APPDATA.DEVTEAM}` : null %></pre>
       </td>
       <td>
-<pre>
-   <u><i>Deployment: </i><strong><span id="siteroot">show_site_root_here</span></strong></u>   
-   📁 <%= `${APPDATA.ROOT}` %>
-   📊 PostgreSQL Server: <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
-       MySQL Server: <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
-   🕸  Online: <a href=<%= `${APPDATA.WEBSITE}`%>
-         target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a>
-</pre>
-         <script>
-            document.getElementById("siteroot").innerHTML = window.location.hostname + ":" + (window.location.port ? window.location.port : "<%= `${APPDATA.PORT}`%>");
-         </script>
+<pre>   <u><i>Deployment</i></u>:
+   <strong id="siteroot">show_site_root_here</strong>
+     📁 Folder: <%= `${APPDATA.ROOT}` %>
+     📊 DB (PostgreSQL): <small>(<%= process.env.NODE_APP_DB_PG1.split("@")[1]; %>)</small>
+            (MySQL): <small>(<%= process.env.NODE_APP_DB_MYSQL1.split("@")[1]; %>)</small>
+     🕸  Online: <a href=<%= `${APPDATA.WEBSITE}`%>
+         target="_blank" title="Open in new window: <%= `${APPDATA.WEBSITE}`%>"><%= `${APPDATA.WEBSITE}` %></a></pre>
       </td>
    </tr>
 </table>
+<script>
+   document.getElementById("siteroot").innerHTML = "Webroot:"+window.location.hostname + " Port:" + (window.location.port ? window.location.port : "<%= `${APPDATA.PORT}`%>");
+</script>
 </body>
 </html>

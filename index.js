@@ -19,13 +19,14 @@ const APPDATA = {
   INFO: packageJSON.info || "",
   DESCR: packageJSON.description || "new project",
   DEVTEAM: process.env.NODE_APP_DEV_TEAM || "",
+  TEAMWEB: process.env.NODE_APP_DEV_TEAMWEB || "",
   DEVLEAD: process.env.NODE_APP_DEV_LEAD || "Victor Wright",
+  LEADWEB: process.env.NODE_APP_DEV_LEADWEB || "https://vrw-gh.github.io/vrw-GH",  
   EMAIL: process.env.NODE_APP_DEV_EMAIL || "victor.wright@outlook.de",
   PHONE: process.env.NODE_APP_DEV_PHONE || "+4917646774278",
   LOCATION: process.env.NODE_APP_DEV_ADDR || "83707, Germany",
-  MODE: process.env.NODE_APP_MODE || "Dev.",
-  COOKTIME: process.env.NODE_APP_COOKTIME || "60m",
-  WEBSITE: process.env.NODE_APP_WEBSITE || packageJSON.homepage || "http://127.0.0.1",
+  FLIGHT: process.env.PROJECT_FLIGHT || "Dev.",  
+  WEBSITE: process.env.WEBDEPLOY || packageJSON.homepage || "http://127.0.0.1",
   ROOT: __dirname || "/",
   HOST: process.env.HOST || "http://127.0.0.1",
   PORT: process.env.PORT || 5000,
@@ -85,12 +86,12 @@ app.get("*", (req, res, next) => {
 });
 
 // ----------- Error handling  ----
-errorHandler.MODE = APPDATA.MODE;
+errorHandler.FLIGHT = APPDATA.FLIGHT;
 app.use(errorHandler);
 
 // ----------- Activate server!  ----
 app.listen(APPDATA.PORT, () =>
   console.info(
-    `\n${APPDATA.NAME}: \n- Website: ${APPDATA.WEBSITE} \n- Server: ${APPDATA.HOST}:${APPDATA.PORT}\n- Root: ${APPDATA.ROOT}\n- Mode: ${APPDATA.MODE}/${process.env.NODE_ENV}`
+    `\n${APPDATA.NAME}: \n- Server: ${APPDATA.HOST}:${APPDATA.PORT}\n- Root: ${APPDATA.ROOT}\n- Website: ${APPDATA.WEBSITE} \n- Flight: ${APPDATA.FLIGHT}/Env:${process.env.NODE_ENV}`
   )
 );

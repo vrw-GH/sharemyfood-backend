@@ -22,8 +22,8 @@ const fields = [
 // const idField = fields[0][0];
 const keyField = fields[0][0];
 
-const hms = process.env.NODE_APP_COOKTIME.match(/\D/)[0];
-let COOKTIME = parseInt(process.env.NODE_APP_COOKTIME);
+const hms = process.env.APP_COOKTIME.match(/\D/)[0];
+let COOKTIME = parseInt(process.env.APP_COOKTIME);
 COOKTIME = COOKTIME * (hms === "h" ? 60 * 60 : hms !== "s" ? 60 : 1) * 1000;
 
 export const getUsers = async (req, res) => {
