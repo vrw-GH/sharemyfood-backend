@@ -12,28 +12,28 @@
   </head>
   <body style="padding-left: 30px">
     <h1><img src="/public/favicon.ico" alt="" /> <%= APPDATA.NAME %></h1>
-    <table style="width: 100%; border-spacing: 10px">
-      <tr>
-        <td>
-          <pre>
-<strong>Release: <%= APPDATA.VER %> <i>(<%= APPDATA.MODE %>)</i></strong>
-Description : <%= APPDATA.DESCR %>
-          </pre>
+    <div style="height: 6rem;">
+    <table style="width: 100%; border-spacing: 10px;">
+      <tr style="vertical-align: top;">
+        <td>         
+<pre><strong>Release:     <%= APPDATA.VER %> <i><%= APPDATA.FLIGHT %></i></strong>
+
+<span id="href"></span></pre>
         </td>
         <td style="vertical-align: center">
-          <pre>
-<h5><i><%= `${APPDATA.INFO}` %></i></h5>
-          </pre>
+<pre><strong><%= APPDATA.DESCR %></strong>
+ 
+<small><i><%= `${APPDATA.INFO}` %></i></small></pre>
         </td>
       </tr>
     </table>
-    <h4 id="href"></h4>
-    <script>
-      document.getElementById("href").innerHTML =
-        "Current URL: &emsp; " +
-        window.location.href;
-    </script>
+  </div>
     <hr />
     <br />
+    <script>
+      document.getElementById("href").innerHTML =
+        "Current URL: " +
+        window.location.href;
+    </script>
   </body>
 </html>
