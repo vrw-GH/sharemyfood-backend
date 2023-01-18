@@ -1,15 +1,17 @@
 ## BACKEND for Share My Food project
 
-[![](./public/Screenshot.png?raw=true)](https://smf-backend.onrender.com)
+[![smf-backend.onrender.com](./public/Screenshot.png?raw=true)](https://smf-backend.onrender.com)
 
 <h3>Database/s:</h3>
   &emsp;Live (online) - ElephantSQL  <br>
   &emsp;Production (local) - PostgreSQL, MySQL
 <br>
 
-![](./proj-docs/sharemyfood-v2.pgerd.png)
+![Database Structure](./proj-docs/sharemyfood-v2.pgerd.png)
 
-## <i>Deployment:</i>
+---
+
+## <i>Deployments:</i>
 
 <h4><u>V2</u></h4>
 <h3>- Backend:</h3>
@@ -36,12 +38,14 @@
   <br>
   &emsp;(Beta) <a href="https://vrwgh-finalprojectwd020.netlify.app" target="_blank">https://vrwgh-finalprojectwd020.netlify.app</a>
   <br>
-<br>
 
-## Project Team
+---
 
-Developer - Victor<br>
-Instructor - Jorge Paul (WBS Coding School)<br>
-(WBS WD#020 Group - Jan 2022)<br>
-
-![](https://github.com/vrw-GH/sharemyfood-backend/blob/12df2b5f36d617ee408eef435e23ad8db9da5987/public/site_img.png)
+<pre>
+Developer:   Victor Wright
+Project:     WBS WD#020 Group - Jan 2022
+Instructor:  Jorge Paul (WBS Coding School)
+Date:        12 Jan 2022
+Deployed V1: <a href="https://smf-backend.onrender.com">https://smf-backend.onrender.com</a>
+GH Page:     <a href="https://vrw-gh.github.io/sharemyfood-backend/">vrw-gh.github.io/sharemyfood-backend</a>
+</pre>
