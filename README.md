@@ -1,6 +1,6 @@
 ## BACKEND for Share My Food project
 
-[![smf-backend.onrender.com](./public/Screenshot.png?raw=true)](https://smf-backend.onrender.com)
+[![smf-backend.onrender.com](https://raw.githubusercontent.com/vrw-GH/assets/main/repo-media/share-my-food/Screenshot2.png?raw=true)](https://smf-backend.onrender.com)
 
 <h3>Database/s:</h3>
   &emsp;Live (online) - ElephantSQL  <br>
